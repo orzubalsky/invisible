@@ -39,7 +39,7 @@ if settings.DEBUG:
    
 # portfolio app urls
 urlpatterns += patterns('',
-   url(r'^', include('videos.urls')),
+   url(r'^', include('audiobook.urls')),
 )
 
 

@@ -2,18 +2,17 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
-from videos.forms import *
 from django.forms.formsets import formset_factory
-from videos.models import *
 from django.core import serializers
 from django.utils import simplejson as json
 from ajaxuploader.views import AjaxFileUploader
 from django.middleware.csrf import get_token
+from audiobook.models import *
+from audiobook.forms import *
 
 
-def index(request):   
-    video = Video.objects.filter(page__number=1).order_by('?')[0]    
-    video_list = Video.objects.all().order_by('page')
+def index(request):
+    video = Submission.objects.all()
     
     return render_to_response('index.html', {'video_list': video_list, 'video': video}, context_instance=RequestContext(request))
         

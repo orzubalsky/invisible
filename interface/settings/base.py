@@ -89,17 +89,17 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware'    
 )
 
-ROOT_URLCONF = 'doyouconsider.urls'
+ROOT_URLCONF = 'interface.urls'
 
 TEMPLATE_DIRS = (
     # Put strings here, like '/home/html/django_templates' or 'C:/www/django/templates'.
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    PROJECT_DIR + '/apps/videos/templates',
+    PROJECT_DIR + '/apps/audiobook/templates',
 )
 
 FIXTURE_DIRS = (
-   PROJECT_DIR + '/apps/videos/fixtures',   
+   PROJECT_DIR + '/apps/audiobook/fixtures',   
 )
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
@@ -120,13 +120,13 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'django.contrib.redirects',
     'grappelli',
-    'filebrowser',  
+    'filebrowser',
     'django.contrib.admin',
     'south',                        # intelligent schema and data migrations
     'pytz',                         # python timezone library
-    'dajaxice',                     # django ajax app    
-    'videos',
-    'ajaxuploader',    
+    'dajaxice',                     # django ajax app
+    'audiobook',
+    'ajaxuploader',
     'debug_toolbar',
 )
 
