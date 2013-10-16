@@ -11,7 +11,7 @@ eggs/
 parts/
 
 # ignore static files (for now):
-doyouconsider/static/
+insib/static/
 
 # ignore settings files:
 doyouconsider/settings/development.py

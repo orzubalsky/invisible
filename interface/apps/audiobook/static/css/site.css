@@ -1,343 +1,115 @@
-/*------------POSITIONING------------*/
-html {
-	overflow: -moz-scrollbars-vertical;
-	overflow: scroll;
-	height: 100%;
-}
-
 body {
-	height: 100%;
-	color: #111;
-	background-color: #E8EAEA;
+	font-family:"Andale Mono","Open Sans",Helvetica, Arial, sans-serif;
+	font-size:9pt;
+	color:#333;
+	margin:40px;
 }
-
-* html #container {
-	height: 100%;
+.invisible {
+	color:#EEE;
 }
-
 #container {
-
-}
-
-#mainVideo {
-    background-color: transparent;
-    position: relative;
-}
-#vimeoFrame, #controlLayer {
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-
-#videoHover {
-    background: url('../images/question.png') no-repeat;
-    height: 43px;
-    left: 2px;
-    position: fixed;
-    top: 1px;
-    width: 25px;
-    opacity: 0.8;
-    color: white;
-    font-size: 36pt;
-    text-decoration: none;
-}
-
-#videoHover:hover {
-    opacity: 0.8;
-    width: 0px;
-}
-
-#videoHover h1 {
-    font-size: 56pt;
-    left: 3px;
-    line-height: 1.1;
-    position: fixed;
-    top: -6px;
-    /*opacity: 0.8;   */
-    display: none; 
-	font-family:"Century Gothic";
-	letter-spacing:.08em;
-}
-
-#videoHover span {
-    font-size: 29pt;
-    line-height: 1.1;
-    background-color: white;
-    color:black;
-    padding: 0 11px 10px;
-    position: relative;
-    display: inline;
-    top: -17px;
-    left: 5px;
-}
-
-#videoHover span:hover {
-    background-color: black;
-    color: white;
-}
-
-#videoHover:hover h1 {
-    display: block;
-}
-
-#videoHover:hover span {
-    display: inline;
-}
-
-#videoHover #videoInfo {
-    background-color: white;
-    bottom: 100px;
-    color: black;
-    padding: 6px;
-    font-size: 10pt;    
-    position: fixed;
-    display: none;
-	margin-left: 6px;
-	/*font-family:"Century Gothic";*/
-}
-/* saf3+, chrome1+ argh! */
-@media screen and (-webkit-min-device-pixel-ratio:0) {
-	#videoHover #videoInfo {
-		bottom: 100px;
-	}
-}
-
-#videoHover:hover #videoInfo {
-    display: block;
-}
-
-strong {
-    font-weight: bold;
-}
-
-#allVideos {
-    bottom: 0;
-    height: auto;
-    position: fixed;
-	background-color: #000;    
-}
-
-#allVideos a {
-    background-color: blue;
-    display: block;
-    float: left;
-    margin: 0px;
-    height: 24px;
-    position: relative;
-}
-
-#allVideos a:hover {
-   background-color: red; 
-}
-
-#allVideos a img.index {
-    height: 24px;
-}
-
-#allVideos a .rollover {
-    display: none;
-}
-
-#allVideos a:hover .rollover {
-    display: block;
-}
-
-.rollover {
-    bottom: 30px;
-    display: block;
-    padding: 5px 5px 10px;
-    position: absolute;
-    background-color: #fff;   
-    text-align: center;
-    color: white; 
-	font-family:"Century Gothic";
-	letter-spacing:0em;
-	font-size:.8em;
-}
-
-.rollover .arrow {
-	background: url('../images/down_arrow.png') no-repeat;
-	width:20px;
-	height:20px;
-	position:absolute;
-	top:90px;
-	left:8px;
-	
-}
-
-.rollover img {
-    
-}
-
-.rollover .info {
-    left: 10px;
-    position: absolute;
-    top: 65px;  
-	line-height:1em;
-}
-
-
-/*------------END POSITIONING------------*/
-
-
-
-/* This space left intentionally blank. */
-
-
-
-/*------------COLORS AND BACKGROUND------------*/
-
-/*------------END COLORS------------*/
-
-
-
-/* This space left intentionally blank. */
-
-
-
-/*------------TYPE------------*/
-html,body,textarea,input {
-	font-family:"MariaRegular",Helvetica,Arial,sans-serif;
-	font-size: 8pt;
-	line-height: 1.7em;
-	letter-spacing: .04em;
-}
-
-@font-face {
-    font-family: "MariaRegular";
-    font-style: normal;
-    font-weight: normal;
-    src: url("http://x-cell.ch/fonts/maria-webfont.eot?#iefix") format("embedded-opentype"), url("http://x-cell.ch/fonts/maria-webfont.woff") format("woff"), url("http://x-cell.ch/fonts/maria-webfont.ttf") format("truetype"), url("http://x-cell.ch/fonts/maria-webfont.svg#MariaRegular") format("svg");
-}
-/*------------END TYPE------------*/
-
-
-
-/* This space left intentionally blank. */
-
-
-
-/*------------LINK STATES------------*/
-a {
-
-}
-
-a:hover {
-
-}
-/*------------END LINK STATES------------*/
-
-
-/* This space left intentionally blank. */
-
-
-/*------------ADD VIDEOS------------*/
-
-#add {
-	width: 80%;
-	min-width: 1024px;
-	margin: auto;
-	padding-top:40px;
-}
-#add h1 {
-	font-size:60px;
-	font-weight:normal;
-	line-height:72px;
-	letter-spacing:.08em;
-	font-family:"Century Gothic";
-}
-#add h2 {
-	font-size:14px;
-	font-weight:normal;
-}
-#pdf {
-	width:100%; 
-	height:470px;
-	background-color:#FFF;
-	margin:20px 0;
-	overflow-y:scroll;
-}
-#pdf img {
-    width: 100%;
-}
-.download {
-	width:200px;
-}
-.download select {
-	border:1px solid #CCC;
-	background-color:transparent;
-	padding:3px;
-	-moz-border-radius: 2px;
-	border-radius: 4px;
-	margin-left:10px;
-	margin-bottom:20px;
-}
-.download a {
-	color:#111;
-	text-decoration:none;
-	
-}
-#leftcolumn {
-	float:left;
-	width:60%; 
-}
-#rightcolumn {
-	margin-top:50px;
-	float:right;
-}
-.center {
+	width:780px;
 	margin:auto;
-	display:block;
-	text-align:center;
-}	
-.left {
+}
+#player {
 	float:left;
-	text-align:left;
+	width:240px;
 }
-.right {
+#book {
 	float:right;
-	text-align:right;
 }
-#upload {
-	margin:40px 30px;
+#sounds {
+	padding:0;
+	margin:0;
 }
-#add input, #add textarea {
-	border:none;
-	background-color:#111;
-	color:white;
-	width:360px;
-	padding:10px;
-	margin:5px 0;
-	font-size:1.1em;
-	letter-spacing:.08em;
-	resize:none;
-	font-family:"Century Gothic";
+#sounds td{
+	width:20px;
+	height:6px;
+/*	border:1px solid #EEE;*/
+	margin:0;
+	padding:0;
+	overflow:hidden;
+	font-size:0pt;
 }
-#add textarea {
-    height: 80px;
+.uploaded {
+/*	background:#EEE;*/
+	border:1px solid #EEE;
 }
-#add input#submit {
-	border:none;
-	background-color:transparent;
-	color:#111;
-	font-size:60px;
-	text-align:right;
-	padding-right:0;
-	margin-right:0;
-	position:relative;
-	display:block;
-	right:-28px;
-	cursor: pointer;
+.uploaded:hover {
+/*	background:#EEE;*/
+	background:#333;
 }
-#description {
-	clear:both;
-	padding:20px 0 40px;
-	font-family: Helvetica, Arial, sans-serif;
-	letter-spacing:.1em;
+.empty {
+	background: white;
 }
-/*------------END ADD VIDEOS------------*/
+.empty:hover {
+	background: red;
+}
+
+#page {
+	font-family:"Andale Mono","Open Sans",Helvetica, Arial, sans-serif;
+	font-size:7pt;
+	position:absolute;
+	display:none;
+}
 
 
+/*jplayer yo*/
+div.jp-audio, div.jp-audio-stream, div.jp-video {
 
-/*------------OVERRIDE------------*/ 
-/*------------END OVERRIDE------------*/
+    border: 0;
+}
+div#jp_container_1.jp-audio {
+
+    height: 50px;
+    width: 780px;
+}
+div.jp-audio div.jp-type-single div.jp-interface {
+	background-color: #FFF;
+    height: 50px;
+}
+
+div.jp-audio ul.jp-controls {
+    padding: 0;
+    width: 260px;
+}
+div.jp-audio div.jp-type-single div.jp-progress {
+	top:3px;
+    left: 35px;
+    width: 745px;
+	height:5px;
+}
+div.jp-audio div.jp-type-single div.jp-time-holder {
+	font-family:"Andale Mono","Open Sans",Helvetica, Arial, sans-serif;
+	top:13px;
+    left: 35px;
+    width: 745px;
+	color:#AAA;
+}
+div.jp-current-time, div.jp-duration {
+    font-style: normal;
+}
+div.jp-play-bar {
+    background: url("../blue.monday/invisible.buttons.png") repeat-x scroll 0 -218px transparent;
+}
+div.jp-seek-bar {
+	background: url("../blue.monday/invisible.buttons.png") repeat-x scroll 0 -202px transparent;
+}
+a.jp-play {
+	background: url("../blue.monday/invisible.buttons.png") 0 0 no-repeat;
+}
+a.jp-play:hover {
+	background: url("../blue.monday/invisible.buttons.png") -41px 0 no-repeat;
+}
+a.jp-pause {
+	background: url("../blue.monday/invisible.buttons.png") 0 -42px no-repeat;
+	display: none;
+}
+a.jp-pause:hover {
+	background: url("../blue.monday/invisible.buttons.png") -41px -42px no-repeat;
+}
+a.jp-play, a.jp-pause {
+    height: 10px;
+    width: 10px;
+}
+

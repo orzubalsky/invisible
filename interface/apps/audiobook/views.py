@@ -12,11 +12,15 @@ from audiobook.forms import *
 
 
 def index(request):
-    video = Submission.objects.all()
-    
-    return render_to_response('index.html', {'video_list': video_list, 'video': video}, context_instance=RequestContext(request))
-        
-        
+    """
+    """
+    submissions = Submission.objects.all()
+
+    return render_to_response('index.html', {
+        'submissions': submissions,
+    }, context_instance=RequestContext(request))
+
+
 def detail(request, video_id):
     if request.method == "POST":
         data = serializers.serialize('json', Video.objects.filter(pk=video_id))
