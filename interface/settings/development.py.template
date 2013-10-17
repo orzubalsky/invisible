@@ -1,6 +1,6 @@
 LOCAL_SETTINGS = True
-from django.conf import settings
-from ts.settings.base import *
+from interface.settings.base import *
+
 
 SITE_ID = 1
 

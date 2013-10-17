@@ -10,6 +10,7 @@ body {
 #container {
 	width:780px;
 	margin:auto;
+	position: relative;
 }
 #player {
 	float:left;
@@ -128,11 +129,10 @@ a.jp-play, a.jp-pause {
 }
 #upload_form {
 	position:absolute;
-	width:220px;
-	height:60px;
+	width:212px;
 	z-index:101;
 	background:white;
 	padding:30px;
-	top:300px;
-	left:300px;
+	top:50px;
+	left:0px;
 }
