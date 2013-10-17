@@ -17,7 +17,7 @@
 		this.init = function() 
 		{		
 		    this.storeCsrvToken();
-		    this.player();
+		    this.initializePlayer();
 		    this.displayPageNumber();
             this.pageInteraction();	   
             this.changePages(); 
@@ -25,13 +25,20 @@
 		};	
 		
 		
+	    /*
+	     *  Store csrv token in the javascript site scope.
+	     *  This will be used in ajax form submissions.
+	     */		
 		this.storeCsrvToken = function() 
 		{
             this.csrvToken = $('input[name="csrfmiddlewaretoken"]').val();
 		};
 		
 
-		this.player = function()
+	    /*
+	     *  Create an instance of jPlayer with no media.
+	     */		
+		this.initializePlayer = function()
 		{
 			$("#jquery_jplayer_1").jPlayer({
 				ready: function (event) {},
@@ -42,6 +49,10 @@
 		};
 
 
+	    /*
+	     *  Update the position and text of #page div depending
+	     *  on the page that the mouse cursor is on
+	     */	
 		this.displayPageNumber = function()
 		{
 			$("#sounds a").hover(function()
@@ -75,7 +86,7 @@
 
 		
  		/*
- 		 *  
+ 		 *	Respond to mouse clicks on pages depending on the status of the page.  
  		 */	
  		this.pageInteraction = function() 
  		{		    
@@ -87,17 +98,15 @@
      		   	
  		        if ($(this).hasClass('uploaded'))
  		        {
+ 		        	var page_number = lib.getId($(this).attr('id'));
  		        	var audio_file = $('span', this).attr('id');
 
-					$("#jquery_jplayer_1").jPlayer("setMedia", {
-						mp3: audio_file,
-					});
-					$("#jquery_jplayer_1").jPlayer("play");
+ 		        	self.loadSubmission(page_number, audio_file);
  		        }
  		        else
  		        {
- 		        	alert('b');
- 		        }
+					//
+		        }
 
 
      		    // var container = $('#main');
@@ -110,6 +119,21 @@
       			//     function(data) { $(container).empty().html(data); }
       			// ); 		    
       		});
+ 		};
+
+
+ 		/*
+ 		 *	Play audio file and load page in google book
+ 		 */	
+ 		this.loadSubmission = function(page_number, audio_file)
+ 		{
+ 			var self = this;
+
+			$("#jquery_jplayer_1").jPlayer("setMedia", {
+				mp3: audio_file,
+			});
+			$("#jquery_jplayer_1").jPlayer("play");
+
  		};
 
 
