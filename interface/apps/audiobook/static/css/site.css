@@ -13,7 +13,8 @@ body {
 	position: relative;
 }
 #player {
-	float:left;
+	position: absolute;
+	top: 50px;
 	width:240px;
 }
 #book {
@@ -133,6 +134,6 @@ a.jp-play, a.jp-pause {
 	z-index:101;
 	background:white;
 	padding:30px;
-	top:50px;
+	top:50px	;
 	left:0px;
 }
