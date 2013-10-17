@@ -33,7 +33,7 @@
         <div id="sounds">
             {% for page in work.page_set.all %}
                 {% if page.submission.audio_file %}
-                <a id="page_{{ forloop.counter}}" class="uploaded"></a>
+                <a id="page_{{ forloop.counter}}" class="uploaded"><span id="{{ STATIC_URL }}{{ page.submission.audio_file.name }}"></span></a>
                 {% else %}
                 <a id="page_{{ forloop.counter}}"></a>                
                 {% endif %}

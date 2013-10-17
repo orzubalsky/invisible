@@ -19,7 +19,7 @@
 		    this.storeCsrvToken();
 		    this.player();
 		    this.displayPageNumber();
-            this.pageSelection();	   
+            this.pageInteraction();	   
             this.changePages(); 
             this.formValues();
 		};	
@@ -34,16 +34,9 @@
 		this.player = function()
 		{
 			$("#jquery_jplayer_1").jPlayer({
-				ready: function (event) {
-					$(this).jPlayer("setMedia", {
-						oga:"http://www.huongngo.com/site_sf/dreammachine/SITE_shortmix.ogg",
-						mp3:"http://www.huongngo.com/site_sf/dreammachine/SITE_shortmix.mp3",
-						wav:"http://www.huongngo.com/site_sf/dreammachine/SITE_shortmix.wav"
-					});
-					//$(this).jPlayer("play");
-				},
-				swfPath: "dreammachine",
-				supplied: "oga, mp3, wav",
+				ready: function (event) {},
+		        swfPath: STATIC_URL + "js",
+				supplied: "mp3",
 				wmode: "window"
 			});
 		};
@@ -81,6 +74,45 @@
 		};
 
 		
+ 		/*
+ 		 *  
+ 		 */	
+ 		this.pageInteraction = function() 
+ 		{		    
+ 		    var self = this;
+
+ 		    $('#sounds > a').live('click', function(e) 
+ 		    {
+ 		        e.preventDefault();
+     		   	
+ 		        if ($(this).hasClass('uploaded'))
+ 		        {
+ 		        	var audio_file = $('span', this).attr('id');
+
+					$("#jquery_jplayer_1").jPlayer("setMedia", {
+						mp3: audio_file,
+					});
+					$("#jquery_jplayer_1").jPlayer("play");
+ 		        }
+ 		        else
+ 		        {
+ 		        	alert('b');
+ 		        }
+
+
+     		    // var container = $('#main');
+
+      			// lib.ajax(
+      			//     $(this).attr('href'), 
+      			//     '{ csrfmiddlewaretoken:' + self.csrvToken + '}', 
+      			//     'html', 
+      			//     container, 
+      			//     function(data) { $(container).empty().html(data); }
+      			// ); 		    
+      		});
+ 		};
+
+
 		this.formValues = function() 
 		{
         	// the input box element
@@ -148,28 +180,6 @@
             $('#vimeoFrame').attr('src', src);		    
 		}
 		 
- 		/*
- 		 *  Clicking on a nav anchor displays the page
- 		 */	
- 		this.pageSelection = function() 
- 		{		    
- 		    var self = this;
-
- 		    $('#container > a').live('click', function(e) 
- 		    {
- 		        e.preventDefault();
-     		   
-     		    var container = $('#main');
-
-      			lib.ajax(
-      			    $(this).attr('href'), 
-      			    '{ csrfmiddlewaretoken:' + self.csrvToken + '}', 
-      			    'html', 
-      			    container, 
-      			    function(data) { $(container).empty().html(data); }
-      			); 		    
-      		});
- 		};
 	};
 })(jQuery);
 

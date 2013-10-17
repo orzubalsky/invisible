@@ -2,6 +2,7 @@ from django.db.models import *
 from django.db.models.query import QuerySet
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
+from django.template.defaultfilters import slugify
 
 
 class Base(Model):
@@ -114,7 +115,7 @@ class Submission(Base):
 
     def audio_filename(self, filename):
         return 'uploads/%s/page_%i_%s' % (
-            self.page.work.name,
+            slugify(self.page.work.name),
             self.page.number,
             filename
         )
