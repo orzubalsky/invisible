@@ -2,12 +2,6 @@ from audiobook.models import *
 from django.contrib import admin
 
 
-class PageInline(admin.TabularInline):
-    model = Page
-    extra = 0
-    fields = ['number', ]
-
-
 class SubmissionsInline(admin.TabularInline):
     model = Submission
     extra = 2
@@ -24,7 +18,6 @@ class PageAdmin(admin.ModelAdmin):
 
 
 class WorkAdmin(admin.ModelAdmin):
-    inlines = [PageInline]
     list_display = ('name', 'page_count')
 
 

@@ -96,17 +96,19 @@
  		    {
  		        e.preventDefault();
      		   	
+ 	        	var page_number = lib.getId($(this).attr('id'));
+
  		        if ($(this).hasClass('uploaded'))
  		        {
- 		        	var page_number = lib.getId($(this).attr('id'));
  		        	var audio_file = $('span', this).attr('id');
 
- 		        	self.loadSubmission(page_number, audio_file);
+ 		        	self.loadAudio(page_number, audio_file);
  		        }
  		        else
  		        {
-					//
 		        }
+				
+				self.loadGoogleBookPage(page_number);
 
 
      		    // var container = $('#main');
@@ -125,15 +127,31 @@
  		/*
  		 *	Play audio file and load page in google book
  		 */	
- 		this.loadSubmission = function(page_number, audio_file)
+ 		this.loadAudio = function(page_number, audio_file)
  		{
  			var self = this;
 
+ 			// play audio file
 			$("#jquery_jplayer_1").jPlayer("setMedia", {
 				mp3: audio_file,
 			});
 			$("#jquery_jplayer_1").jPlayer("play");
 
+			self.loadGoogleBookPage(page_number);
+ 		};
+
+
+ 		/*
+ 		 *	Reload iframe on a selected page
+ 		 */	
+ 		this.loadGoogleBookPage = function(page_number)
+ 		{
+ 			// reload the google book frame with the selected page
+			var iframe_src = $('#book iframe').attr('src');
+			iframe_src = iframe_src.replace(/(lpg=).*?(&)/,'$1' + page_number + '$2');
+			iframe_src = iframe_src.replace(/(&pg=).*?(&)/,'$1' + page_number + '$2');			
+
+            $('#book iframe').attr('src', iframe_src);	
  		};
 
 
@@ -169,41 +187,6 @@
 				}
 			});			
 		};	
-		
-		
-		this.changePages = function()
-		{
-		    var self = this;
-		    
-		    var randomIndex = lib.random(84,0);
-		    var option = $('#selectPage option').eq(randomIndex);          
-            $('#selectPage option').eq(randomIndex).attr('selected', 'selected');
-            self.changePage(option);	    
-		    
-            $('#selectPage').change(function() 
-            {
-    		    var option = $('option:selected', this);          
-                self.changePage(option);
-            });		    
-		};
-		
-		
-		this.changePage = function(optionElement)
-		{
-            $('#pdf img').attr('src', $(optionElement).val());
-			$('#id_page_number').val($(optionElement).text());		    
-		};
-		
-		
- 		/*
- 		 *  Change the source of the Vimeo iFrame player 
- 		 */		
-		this.editIframeSrc = function(vimeoCode)
-		{
-		    var src = 'http://player.vimeo.com/video/' + vimeoCode + '?api=1&amp;player_id=vimeoFrame';
-            $('#vimeoFrame').attr('src', src);		    
-		}
-		 
 	};
 })(jQuery);
 
