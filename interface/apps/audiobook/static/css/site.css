@@ -22,27 +22,30 @@ body {
 	padding:0;
 	margin:0;
 }
-#sounds td{
+#sounds a {
+	display: block; 
 	width:20px;
 	height:6px;
-/*	border:1px solid #EEE;*/
-	margin:0;
+	border-width:1px;
+	border-color: transparent;
+	border-style: solid;
+	margin-right:2px;
+	margin-bottom: 2px;
 	padding:0;
 	overflow:hidden;
 	font-size:0pt;
+	float: left;
 }
-.uploaded {
-/*	background:#EEE;*/
-	border:1px solid #EEE;
+#sounds a.uploaded {
+	border-color:#EEE;
 }
-.uploaded:hover {
-/*	background:#EEE;*/
+#sounds a.uploaded:hover {
 	background:#333;
 }
-.empty {
+#sounds a.empty {
 	background: white;
 }
-.empty:hover {
+#sounds a.empty:hover {
 	background: red;
 }
 

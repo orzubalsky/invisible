@@ -11,13 +11,21 @@ from audiobook.models import *
 from audiobook.forms import *
 
 
-def index(request):
+def book(request):
     """
     """
-    submissions = Submission.objects.all()
+    try:
+        work = Work.objects.get(name='invisible man')
+    except Work.DoesNotExist:
+        work = Work(
+            name='invisible man',
+            page_count=600,
+            embed_code='<iframe frameborder="0" scrolling="no" style="border-bottom:2px solid #AAA" src="http://books.google.fr/books?id=YpTA74jz018C&lpg=PP1&hl=fr&pg=PP1&output=embed" width=500 height=500></iframe>'
+        )
+        work.save()
 
     return render_to_response('index.html', {
-        'submissions': submissions,
+        'work': work,
     }, context_instance=RequestContext(request))
 
 

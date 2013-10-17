@@ -29,26 +29,29 @@
             To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
         </div>
     </div>
-
     <div id="player">
-        <div id="page">PAGE 8</div>
+        <div id="sounds">
+            {% for page in work.page_set.all %}
+                {% if page.submission.audio_file %}
+                <a class="uploaded" id="page_{{ forloop.counter}}"></a>
+                {% endif %}
+            {% endfor %}
 
-        <table id="sounds">
-            <tr>
-                <td class="uploaded"><br/></td>
-                <td class="empty"><br/></td>
-                <td><br/></td>
-                <td class="uploaded"><br/></td>
-                <td><br/></td>
-                <td><br/></td>
-                <td class="uploaded"><br/></td>
-            </tr>
-        </table>
+            <td class="uploaded"><br/></td>
+            <td><br/></td>
+            <td><br/></td>
+            <td class="uploaded"><br/></td>
+            <td><br/></td>
+            <td><br/></td>
+            <td class="uploaded"><br/></td>
+        </div>
     </div>
 </div>
 
+<div id="page">PAGE <span id="page_number">#</span></div>
+
 <div id="book">
-    <iframe frameborder="0" scrolling="no" style="border-bottom:2px solid #AAA" src="http://books.google.fr/books?id=YpTA74jz018C&lpg=PP1&hl=fr&pg=PP1&output=embed" width=500 height=500></iframe>
+    {{ work.embed_code|safe }}
 </div>
 
 {% endblock content %}

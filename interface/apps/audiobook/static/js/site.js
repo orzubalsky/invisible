@@ -18,6 +18,7 @@
 		{		
 		    this.storeCsrvToken();
 		    this.player();
+		    this.displayPageNumber();
             this.pageSelection();	   
             this.changePages(); 
             this.formValues();
@@ -45,14 +46,22 @@
 				supplied: "oga, mp3, wav",
 				wmode: "window"
 			});
-			
-			$("#sounds").hover(function(){
+		};
+
+
+		this.displayPageNumber = function()
+		{
+			$("#sounds a").hover(function()
+			{
+				var id_string = $(this).attr('id');
+				var page_number = lib.getId(id_string);
+				$('#page span').text(page_number);
 				$("#page").show();
 			});
-			$("#sounds").mouseleave(function(){
+			$("#sounds a").mouseleave(function()
+			{
 				$("#page").hide();
 			});
-			
 			
 			var mouseX;
 			var mouseY;
@@ -64,12 +73,11 @@
 			  $('#page').css({'top':mouseY,'left':mouseX});
 			});
 			
-			
 			$("#sound").hover(function() {
 				$("#soundinfo").stop().fadeTo(400,.4);
 			}, function() {
 				$("#soundinfo").stop().fadeTo(400,0);
-			});			
+			});	
 		};
 
 		
