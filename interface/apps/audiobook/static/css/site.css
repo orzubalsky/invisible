@@ -115,4 +115,24 @@ a.jp-play, a.jp-pause {
     height: 10px;
     width: 10px;
 }
-
+#upload_bg {
+	position:absolute;
+	left:0px;
+	top:0px;
+	height:768px;
+	width:1024px;
+	background:white;
+	z-index:100;
+	opacity:0.4;
+	filter:alpha(opacity=40);
+}
+#upload_form {
+	position:absolute;
+	width:220px;
+	height:60px;
+	z-index:101;
+	background:white;
+	padding:30px;
+	top:300px;
+	left:300px;
+}

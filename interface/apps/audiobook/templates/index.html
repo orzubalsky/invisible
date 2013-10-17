@@ -1,7 +1,12 @@
 {% extends request.is_ajax|yesno:"base_ajax.html,base.html" %}
 
 {% block content %}
-
+<div id="upload_form" >
+	<form name="sound_upload" action="" method="post">&nbsp;
+	<input type="file" name="uploadField" /><br/><br/>
+	<input type="submit" value="Submit">
+	</form>
+</div>
 <div id="jquery_jplayer_1" class="jp-jplayer"></div>
 <div id="jp_container_1" class="jp-audio">
     <div class="jp-type-single">
