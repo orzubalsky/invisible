@@ -11,15 +11,18 @@ eggs/
 parts/
 
 # ignore static files (for now):
-insib/static/
+interface/static/
 
 # ignore settings files:
-doyouconsider/settings/development.py
-!doyouconsider/settings/__init__.py
+interface/settings/development.py
+interface/settings/server.py
+!interface/settings/__init__.py
+fab_config.py
+apache.conf
 
 # ignore uploaded files
-doyouconsider/media/uploads
+interface/media/uploads
 
 # ignore cache files
 tmp
-doyouconsider/tmp/
+interface/tmp/
