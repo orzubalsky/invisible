@@ -122,10 +122,9 @@ a.jp-play, a.jp-pause {
 	top:0px;
 	height:768px;
 	width:1024px;
-	background:white;
+	background:yellow;
 	z-index:100;
-	opacity:0.4;
-	filter:alpha(opacity=40);
+
 }
 #upload_form {
 	position:absolute;
@@ -135,4 +134,5 @@ a.jp-play, a.jp-pause {
 	padding:30px;
 	top:50px;
 	left:0px;
+	border:1pt solid #EEE;
 }
