@@ -25,7 +25,7 @@ def local():
 @task
 def testing():
     env.run = run
-    env.hosts = ['tstest.net']
+    env.hosts = ['inv1s1bl3.theyoungest.com']
     env.project_dir = Config.test_project_dir
     env.username = Config.testing_username
     env.password = Config.testing_password
@@ -34,7 +34,7 @@ def testing():
 @task
 def prod():
     env.run = run
-    env.hosts = ['tradeschool.coop']
+    env.hosts = ['invisible.theyoungest.com']
     env.project_dir = Config.productino_project_dir
     env.username = Config.production_username
     env.password = Config.production_password
@@ -57,7 +57,7 @@ def update_project_settings():
         'Enter name of local settings file:',
         default=server_settings_file
     )
-    destination = '%s/ff/settings/server.py' % env.project_dir
+    destination = '%s/interface/settings/server.py' % env.project_dir
     put(filename, destination, use_sudo=True)
     sudo('chown %s:webdev %s' % (env.username, destination))
 
@@ -110,7 +110,7 @@ def restart():
 @task
 def test():
     with cd(env.project_dir):
-        sudo('./bin/django test futures -v 2', user=env.username)
+        sudo('./bin/django test invisible -v 2', user=env.username)
 
 
 @task
@@ -172,7 +172,7 @@ def init_project_sourcecode():
     sudo('chown %s:webdev %s' % env.username, env.project_dir)
     with cd(env.project_dir):
         sudo(
-            'git clone git@github.com:orzubalsky/fantastic-futures.git .',
+            'git clone git@github.com:orzubalsky/invisible.git .',
             user=env.username
         )
 
