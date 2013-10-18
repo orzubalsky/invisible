@@ -16,6 +16,7 @@ body {
 	position: absolute;
 	top: 50px;
 	width:240px;
+	float:left;
 }
 #book {
 	float:right;
@@ -117,23 +118,35 @@ a.jp-play, a.jp-pause {
     height: 10px;
     width: 10px;
 }
-#upload_bg {
-	position:absolute;
-	left:0px;
-	top:0px;
-	height:768px;
-	width:1024px;
-	background:yellow;
-	z-index:100;
+
+#upload_form {
+	width:135px;
+	padding:20px;
+	overflow:hidden;
 
 }
-#upload_form {
+
+#upload_form #file_upload {
+	opacity:0;
+}
+
+#upload_bg {
 	position:absolute;
-	width:212px;
-	z-index:101;
-	background:white;
-	padding:30px;
-	top:50px	;
+	top:100px;
 	left:0px;
+	border:1pt solid #EEE;
+	background:white;
+	z-index:101;
+	width:236px;
+}
+#upload_bg #default_text {
+	position:absolute;
+	top:20px;
+	left:20px;
+	border:1pt solid #EEE;
+	padding:4px 5px;
+	width:185px;
+}
+#upload_form #file_submit {
 	border:1pt solid #EEE;
 }
