@@ -70,8 +70,8 @@
 			var mouseX;
 			var mouseY;
 			$(document).mousemove( function(e) {
-			   mouseX = e.pageX+20; 
-			   mouseY = e.pageY-20;
+			   mouseX = e.pageX-140; 
+			   mouseY = e.pageY-70;
 			});  
 			$("#sounds").mouseover(function(){
 			  $('#page').css({'top':mouseY,'left':mouseX});
