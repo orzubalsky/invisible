@@ -129,6 +129,9 @@ a.jp-play, a.jp-pause {
 #upload_form #id_audio_file {
 	opacity:1;
 }
+#upload_form #id_page {
+	display: none;
+}
 
 #upload_bg {
 	position:absolute;

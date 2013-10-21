@@ -9,7 +9,6 @@ class SubmissionForm(ModelForm):
 
     page = forms.ModelChoiceField(
         queryset=Page.objects.all(),
-        #widget=forms.HiddenInput,
         error_messages={'required': 'please select a page'}
     )
     audio_file = forms.FileField(
