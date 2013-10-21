@@ -57,7 +57,7 @@ body {
 #page {
 	font-family:"Andale Mono","Open Sans",Helvetica, Arial, sans-serif;
 	font-size:7pt;
-	position:absolute;
+	position:fixed;
 	display:none;
 }
 
