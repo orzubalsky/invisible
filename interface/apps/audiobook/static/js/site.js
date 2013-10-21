@@ -21,7 +21,6 @@
 		    this.displayPageNumber();
             this.pageInteraction();	   
             //this.HandleUploadForm(); 
-            this.formValues();
 		};	
 		
 		
@@ -95,8 +94,10 @@
  		    $('#sounds > a').live('click', function(e) 
  		    {
  		        e.preventDefault();
-     		   	
+				
+				// update google embed to load the page     		   	
  	        	var page_number = lib.getId($(this).attr('id'));
+				self.loadGoogleBookPage(page_number);
 
  		        if ($(this).hasClass('uploaded'))
  		        {
@@ -106,22 +107,25 @@
  		        }
  		        if ($(this).hasClass('empty'))
  		        {
+ 		        	// update page field
  		        	$('select#id_page').val(page_number);
- 		        }
-				
-				self.loadGoogleBookPage(page_number);
 
+ 		        	// update file label
+ 		        	$('#default_text').text('choose file for Page ' + page_number);
 
-     		    // var container = $('#main');
-
-      			// lib.ajax(
-      			//     $(this).attr('href'), 
-      			//     '{ csrfmiddlewaretoken:' + self.csrvToken + '}', 
-      			//     'html', 
-      			//     container, 
-      			//     function(data) { $(container).empty().html(data); }
-      			// ); 		    
+ 		        	// display upload form
+ 		        	$('#upload_bg').fadeIn(300);
+ 		        }	    
       		});
+
+ 		    // update file label with selected filename 
+ 		    // when a file is selected
+			$("input#id_audio_file").change(function () 
+			{
+				var filename = $(this).val().split('\\').pop();
+				$('#default_text').text(filename);
+			});
+
  		};
 
 
@@ -223,39 +227,6 @@
         	return uuid
     	};
 
-
-		this.formValues = function() 
-		{
-        	// the input box element
-			var inputbox = $('#id_author');
-
-			// the input box's default value 
-			var defaultValue = $(inputbox).val();
-
-			$(inputbox).live('focus', function() {
-				$(this).val('');
-			})
-			.live('blur', function() {
-				if ($(this).val().length < 1) {
-					$(inputbox).val(defaultValue);
-				}
-			});
-			
-        	// the input box element
-			var inputbox = $('#id_message');
-
-			// the input box's default value 
-			var defaultValue = $(inputbox).val();
-
-			$(inputbox).live('focus', function() {
-				$(this).val('');
-			})
-			.live('blur', function() {
-				if ($(this).val().length < 1) {
-					$(inputbox).val(defaultValue);
-				}
-			});			
-		};	
 	};
 })(jQuery);
 
