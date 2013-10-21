@@ -7,8 +7,7 @@
 ;(function($){
 	var site = window.site = new function() 
 	{	    
-	    this.submissionId = 3;
-	    this.playing = false;
+	    this.playingElement = '';
 	    this.csrvToken = '';
 	    
 	    /*
@@ -39,12 +38,25 @@
 	     */		
 		this.initializePlayer = function()
 		{
+			var self = this;
+
 			$("#jquery_jplayer_1").jPlayer({
-				ready: function (event) {},
+				ready: function(event){},
 		        swfPath: STATIC_URL + "js",
 				supplied: "mp3",
 				wmode: "window"
 			});
+
+			$("#jquery_jplayer_1").bind($.jPlayer.event.ended, function(event)
+			{
+  				var next_element = self.getNextPlayableAudio();
+
+ 	        	var page_number = lib.getId($(next_element).attr('id'));
+				self.loadGoogleBookPage(page_number);
+
+				var audio_file = $('span', next_element).attr('id');
+				self.loadAudio(page_number, audio_file, next_element);
+			});			
 		};
 
 
@@ -103,7 +115,7 @@
  		        {
  		        	var audio_file = $('span', this).attr('id');
 
- 		        	self.loadAudio(page_number, audio_file);
+ 		        	self.loadAudio(page_number, audio_file, this);
  		        }
  		        if ($(this).hasClass('empty'))
  		        {
@@ -132,7 +144,7 @@
  		/*
  		 *	Play audio file and load page in google book
  		 */	
- 		this.loadAudio = function(page_number, audio_file)
+ 		this.loadAudio = function(page_number, audio_file, element)
  		{
  			var self = this;
 
@@ -142,7 +154,29 @@
 			});
 			$("#jquery_jplayer_1").jPlayer("play");
 
-			self.loadGoogleBookPage(page_number);
+			$('#sounds a').removeClass('playing');
+			$(element).addClass('playing');
+ 		};
+
+
+
+ 		/*
+ 		 *	Try to find elements that have the class .uploaded
+ 		 *	and that is after the index of the currently played element
+ 		 *	return the first element found
+ 		 */	
+ 		this.getNextPlayableAudio = function()
+ 		{
+ 			var self = this;
+
+			var currently_playing = $('#sounds a.playing');
+
+			var index = $(currently_playing).index();
+
+			var next_elements = $('#sounds a:gt('+index+')');
+			var next_element = $(next_elements).filter('.uploaded').first();
+
+			return next_element;
  		};
 
 
@@ -197,7 +231,7 @@
                 	$.getJSON(progress_url, {'X-Progress-ID': uuid}, function(data, status)
                 	{
                     	if (data) {
-                    		console.log(data);
+
                         	var progress = parseInt(data.uploaded) / parseInt(data.length);
                         	var width = $progress.find('.progress-container').width()
                         	var progress_width = width * progress;

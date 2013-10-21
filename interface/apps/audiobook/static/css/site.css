@@ -51,7 +51,9 @@ body {
 #sounds a.empty:hover {
 	background: red;
 }
-
+#sounds a.playing {
+	background: black;
+}
 #page {
 	font-family:"Andale Mono","Open Sans",Helvetica, Arial, sans-serif;
 	font-size:7pt;
