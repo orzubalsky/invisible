@@ -20,7 +20,7 @@
 		    this.initializePlayer();
 		    this.displayPageNumber();
             this.pageInteraction();	   
-            this.changePages(); 
+            //this.HandleUploadForm(); 
             this.formValues();
 		};	
 		
@@ -104,9 +104,10 @@
 
  		        	self.loadAudio(page_number, audio_file);
  		        }
- 		        else
+ 		        if ($(this).hasClass('empty'))
  		        {
-		        }
+ 		        	$('select#id_page').val(page_number);
+ 		        }
 				
 				self.loadGoogleBookPage(page_number);
 
@@ -153,6 +154,74 @@
 
             $('#book iframe').attr('src', iframe_src);	
  		};
+
+
+ 		/*
+ 		 *	Handle file upload and progress bar
+ 		 */	
+ 		this.HandleUploadForm = function() 
+ 		{
+ 			var self = this;
+
+       		$('#upload').submit(function()
+        	{
+            	// Prevent multiple submits
+            	if ($.data(this, 'submitted')) 
+            	{
+            		return false;
+            	}
+
+            	var freq = 500; // freqency of update in ms
+            	var uuid = self.gen_uuid(); // id for this upload so we can fetch progress info.
+            	var progress_url = 'upload_progress/'; // ajax view serving progress info
+
+            	// Append X-Progress-ID uuid form action
+            	this.action += (this.action.indexOf('?') == -1 ? '?' : '&') + 'X-Progress-ID=' + uuid;
+
+            	var $progress = $('<div id="upload-progress" class="upload-progress"></div>').
+                	appendTo('form#upload').append('<div class="progress-container"><span class="progress-info">uploading 0%</span><div class="progress-bar"></div></div>');
+
+            	// progress bar position
+            	$progress.css({
+                	position: ($.browser.msie && $.browser.version < 7 )? 'absolute' : 'fixed',
+                	left: '50%', marginLeft: 0-($progress.width()/2), bottom: '20%'
+            	}).show();
+
+            	// Update progress bar
+            	function update_progress_info() {
+                	$progress.show();
+                	$.getJSON(progress_url, {'X-Progress-ID': uuid}, function(data, status)
+                	{
+                    	if (data) {
+                    		console.log(data);
+                        	var progress = parseInt(data.uploaded) / parseInt(data.length);
+                        	var width = $progress.find('.progress-container').width()
+                        	var progress_width = width * progress;
+                        	$progress.find('.progress-bar').width(progress_width);
+                        	$progress.find('.progress-info').text('uploading ' + parseInt(progress*100) + '%');
+                    	}
+                    	window.setTimeout(update_progress_info, freq);
+                	});
+            	};
+            	window.setTimeout(update_progress_info, freq);
+
+            	$.data(this, 'submitted', true); // mark form as submitted.
+        	});
+		};
+
+
+ 		/*
+ 		 *	Generate 32 char random uuid
+ 		 */	
+ 		this.gen_uuid = function () 
+ 		{
+        	var uuid = ""
+        	for (var i=0; i < 32; i++) 
+        	{
+            	uuid += Math.floor(Math.random() * 16).toString(16);
+        	}
+        	return uuid
+    	};
 
 
 		this.formValues = function() 

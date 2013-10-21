@@ -39,8 +39,7 @@ class WorkQuerySet(QuerySet):
 class WorkManager(Manager):
     def get_query_set(self):
         return WorkQuerySet(self.model, using=self._db).select_related(
-                'page__submission', 
-            ).prefetch_related('page_set')
+            'page__submission', ).prefetch_related('page_set')
 
 
 class Work(Base):

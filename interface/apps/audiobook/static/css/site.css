@@ -123,11 +123,11 @@ a.jp-play, a.jp-pause {
 	width:135px;
 	padding:20px;
 	overflow:hidden;
-
+	position: relative;
 }
 
-#upload_form #file_upload {
-	opacity:0;
+#upload_form #id_audio_file {
+	opacity:1;
 }
 
 #upload_bg {
@@ -149,4 +149,5 @@ a.jp-play, a.jp-pause {
 }
 #upload_form #file_submit {
 	border:1pt solid #EEE;
+
 }
