@@ -21,7 +21,7 @@ fab_config.py
 apache.conf
 
 # ignore uploaded files
-interface/media/uploads
+interface/media/uploads/
 
 # ignore cache files
 tmp
