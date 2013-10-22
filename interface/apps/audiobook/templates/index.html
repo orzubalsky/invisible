@@ -1,6 +1,49 @@
 {% extends request.is_ajax|yesno:"base_ajax.html,base.html" %}
 
 {% block content %}
+<style type="text/css">
+#book {
+	padding: 0px;
+	height: 450px;
+	width: 420px;
+	border: 2px solid #669900;
+	overflow: auto;
+	margin: 0px;
+}
+</style>
+
+<script>
+//  document.addEventListener('touchmove',function(e){e.preventDefault();},false); // for touch devices
+</script>
+
+<script>
+  $(document).ready(function() {
+  
+    $("#book_iframe").niceScroll("#book",{autohidemode:false});
+	
+  });
+  
+/*  
+  function resize(dom) {
+    $(dom).height("");  //reset height to fix browser bug
+	var cc=$(dom).contents();
+	var hh=Math.max(cc.find('html').attr('scrollHeight'),cc.find('body').attr('scrollHeight'));
+	$(dom).height(hh);
+	$(dom).parent().getNiceScroll().onResize();
+	$(dom).parent().scrollTop(0);  // always on top
+  }
+*/  
+  
+</script>
+
+<script>
+  var hh=200;
+  function toggle(me) {
+    $(me).animate({height:hh},function(){$(this).getNiceScroll().onResize()});
+	hh=600-hh;
+  }
+</script>
+
 
 <div id="upload_bg">
 	<div id="default_text">Choose file for page</div>
