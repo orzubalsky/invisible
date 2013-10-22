@@ -130,7 +130,6 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'south',                        # intelligent schema and data migrations
     'pytz',                         # python timezone library
-    'dajaxice',                     # django ajax app
     'audiobook',
     'ajaxuploader',
     'debug_toolbar',
