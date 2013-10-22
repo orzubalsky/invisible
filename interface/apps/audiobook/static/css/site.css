@@ -158,3 +158,6 @@ a.jp-play, a.jp-pause {
 	background: #757575;
 	color: white; 
 }
+#book_iframe {
+	position:relative;
+}

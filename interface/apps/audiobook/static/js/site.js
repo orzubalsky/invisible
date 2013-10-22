@@ -271,4 +271,5 @@
 $(document).ready(function()
 {   
 	site.init();	
+	$('#book_iframe').perfectScrollbar();
 });
