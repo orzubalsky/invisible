@@ -108,11 +108,11 @@ a.jp-play:hover {
 	background: url("../blue.monday/invisible.buttons.png") -41px 0 no-repeat;
 }
 a.jp-pause {
-	background: url("../blue.monday/invisible.buttons.png") 0 -42px no-repeat;
+	background: url("../blue.monday/invisible.buttons.png") 0 -40px no-repeat;
 	display: none;
 }
 a.jp-pause:hover {
-	background: url("../blue.monday/invisible.buttons.png") -41px -42px no-repeat;
+	background: url("../blue.monday/invisible.buttons.png") -41px -40px no-repeat;
 }
 a.jp-play, a.jp-pause {
     height: 10px;
@@ -135,6 +135,7 @@ a.jp-play, a.jp-pause {
 	top:100px;
 	left:0px;
 	border:1pt solid #EEE;
+	border-radius:5px;
 	background:white;
 	z-index:101;
 	width:236px;
