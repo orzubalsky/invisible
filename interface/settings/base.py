@@ -1,5 +1,7 @@
 # Django settings for ts project.
-import os, sys
+import os
+import sys
+from django.conf import global_settings
 
 ADMINS = (
     ('Or Zubalsky', 'juviley@gmail.com'),
@@ -20,10 +22,10 @@ USE_TZ = True
 
 PROJECT_DIR = os.path.dirname(__file__) + '/..'
 
-sys.path.append(os.path.dirname(PROJECT_DIR))    
+sys.path.append(os.path.dirname(PROJECT_DIR))
 sys.path.append(PROJECT_DIR)
-sys.path.append(os.path.join(PROJECT_DIR, 'apps'))                      
-sys.path.append(os.path.join(PROJECT_DIR, 'apps', 'videos', 'libs'))
+sys.path.append(os.path.join(PROJECT_DIR, 'apps'))
+sys.path.append(os.path.join(PROJECT_DIR, 'apps', 'audiobook', 'libs'))
 
 
 # Absolute path to the directory static files should be collected to.
@@ -50,7 +52,6 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'django.contrib.staticfiles.finders.DefaultStorageFinder',
-    'dajaxice.finders.DajaxiceFinder',
 )
 
 # List of callables that know how to import templates from various sources.
@@ -81,25 +82,26 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',    
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware'    
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware'
 )
 
 ROOT_URLCONF = 'interface.urls'
 
 TEMPLATE_DIRS = (
-    # Put strings here, like '/home/html/django_templates' or 'C:/www/django/templates'.
+    # Put strings here, like '/home/html/django_templates'
+    # or 'C:/www/django/templates'.
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     PROJECT_DIR + '/apps/audiobook/templates',
 )
 
 FIXTURE_DIRS = (
-   PROJECT_DIR + '/apps/audiobook/fixtures',   
+    PROJECT_DIR + '/apps/audiobook/fixtures',
 )
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
@@ -109,6 +111,9 @@ MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media')
 ADMIN_MEDIA_PREFIX = '/admin/media/'
 LOGIN_URL = '/admin'
 INTERNAL_IPS = ('127.0.0.1',)
+
+# FILE_UPLOAD_HANDLERS = ('audiobook.handlers.UploadProgressCachedHandler', ) + \
+#     global_settings.FILE_UPLOAD_HANDLERS
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -124,7 +129,6 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'south',                        # intelligent schema and data migrations
     'pytz',                         # python timezone library
-    'dajaxice',                     # django ajax app
     'audiobook',
     'ajaxuploader',
     'debug_toolbar',

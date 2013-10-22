@@ -7,8 +7,7 @@
 ;(function($){
 	var site = window.site = new function() 
 	{	    
-	    this.submissionId = 3;
-	    this.playing = false;
+	    this.playingElement = '';
 	    this.csrvToken = '';
 	    
 	    /*
@@ -20,8 +19,7 @@
 		    this.initializePlayer();
 		    this.displayPageNumber();
             this.pageInteraction();	   
-            this.changePages(); 
-            this.formValues();
+            //this.HandleUploadForm(); 
 		};	
 		
 		
@@ -40,12 +38,25 @@
 	     */		
 		this.initializePlayer = function()
 		{
+			var self = this;
+
 			$("#jquery_jplayer_1").jPlayer({
-				ready: function (event) {},
+				ready: function(event){},
 		        swfPath: STATIC_URL + "js",
 				supplied: "mp3",
 				wmode: "window"
 			});
+
+			$("#jquery_jplayer_1").bind($.jPlayer.event.ended, function(event)
+			{
+  				var next_element = self.getNextPlayableAudio();
+
+ 	        	var page_number = lib.getId($(next_element).attr('id'));
+				self.loadGoogleBookPage(page_number);
+
+				var audio_file = $('span', next_element).attr('id');
+				self.loadAudio(page_number, audio_file, next_element);
+			});			
 		};
 
 
@@ -70,8 +81,8 @@
 			var mouseX;
 			var mouseY;
 			$(document).mousemove( function(e) {
-			   mouseX = e.pageX-140; 
-			   mouseY = e.pageY-70;
+			   mouseX = e.pageX+40; 
+			   mouseY = e.pageY-30;
 			});  
 			$("#sounds").mouseover(function(){
 			  $('#page').css({'top':mouseY,'left':mouseX});
@@ -95,39 +106,45 @@
  		    $('#sounds > a').live('click', function(e) 
  		    {
  		        e.preventDefault();
-     		   	
+				
+				// update google embed to load the page     		   	
  	        	var page_number = lib.getId($(this).attr('id'));
+				self.loadGoogleBookPage(page_number);
 
  		        if ($(this).hasClass('uploaded'))
  		        {
  		        	var audio_file = $('span', this).attr('id');
 
- 		        	self.loadAudio(page_number, audio_file);
+ 		        	self.loadAudio(page_number, audio_file, this);
  		        }
- 		        else
+ 		        if ($(this).hasClass('empty'))
  		        {
-		        }
-				
-				self.loadGoogleBookPage(page_number);
+ 		        	// update page field
+ 		        	$('select#id_page').val(page_number);
 
+ 		        	// update file label
+ 		        	$('#default_text').text('choose file for Page ' + page_number);
 
-     		    // var container = $('#main');
-
-      			// lib.ajax(
-      			//     $(this).attr('href'), 
-      			//     '{ csrfmiddlewaretoken:' + self.csrvToken + '}', 
-      			//     'html', 
-      			//     container, 
-      			//     function(data) { $(container).empty().html(data); }
-      			// ); 		    
+ 		        	// display upload form
+ 		        	$('#upload_bg').fadeIn(300);
+ 		        }	    
       		});
+
+ 		    // update file label with selected filename 
+ 		    // when a file is selected
+			$("input#id_audio_file").change(function () 
+			{
+				var filename = $(this).val().split('\\').pop();
+				$('#default_text').text(filename);
+			});
+
  		};
 
 
  		/*
  		 *	Play audio file and load page in google book
  		 */	
- 		this.loadAudio = function(page_number, audio_file)
+ 		this.loadAudio = function(page_number, audio_file, element)
  		{
  			var self = this;
 
@@ -137,7 +154,29 @@
 			});
 			$("#jquery_jplayer_1").jPlayer("play");
 
-			self.loadGoogleBookPage(page_number);
+			$('#sounds a').removeClass('playing');
+			$(element).addClass('playing');
+ 		};
+
+
+
+ 		/*
+ 		 *	Try to find elements that have the class .uploaded
+ 		 *	and that is after the index of the currently played element
+ 		 *	return the first element found
+ 		 */	
+ 		this.getNextPlayableAudio = function()
+ 		{
+ 			var self = this;
+
+			var currently_playing = $('#sounds a.playing');
+
+			var index = $(currently_playing).index();
+
+			var next_elements = $('#sounds a:gt('+index+')');
+			var next_element = $(next_elements).filter('.uploaded').first();
+
+			return next_element;
  		};
 
 
@@ -155,38 +194,73 @@
  		};
 
 
-		this.formValues = function() 
-		{
-        	// the input box element
-			var inputbox = $('#id_author');
+ 		/*
+ 		 *	Handle file upload and progress bar
+ 		 */	
+ 		this.HandleUploadForm = function() 
+ 		{
+ 			var self = this;
 
-			// the input box's default value 
-			var defaultValue = $(inputbox).val();
+       		$('#upload').submit(function()
+        	{
+            	// Prevent multiple submits
+            	if ($.data(this, 'submitted')) 
+            	{
+            		return false;
+            	}
 
-			$(inputbox).live('focus', function() {
-				$(this).val('');
-			})
-			.live('blur', function() {
-				if ($(this).val().length < 1) {
-					$(inputbox).val(defaultValue);
-				}
-			});
-			
-        	// the input box element
-			var inputbox = $('#id_message');
+            	var freq = 500; // freqency of update in ms
+            	var uuid = self.gen_uuid(); // id for this upload so we can fetch progress info.
+            	var progress_url = 'upload_progress/'; // ajax view serving progress info
 
-			// the input box's default value 
-			var defaultValue = $(inputbox).val();
+            	// Append X-Progress-ID uuid form action
+            	this.action += (this.action.indexOf('?') == -1 ? '?' : '&') + 'X-Progress-ID=' + uuid;
 
-			$(inputbox).live('focus', function() {
-				$(this).val('');
-			})
-			.live('blur', function() {
-				if ($(this).val().length < 1) {
-					$(inputbox).val(defaultValue);
-				}
-			});			
-		};	
+            	var $progress = $('<div id="upload-progress" class="upload-progress"></div>').
+                	appendTo('form#upload').append('<div class="progress-container"><span class="progress-info">uploading 0%</span><div class="progress-bar"></div></div>');
+
+            	// progress bar position
+            	$progress.css({
+                	position: ($.browser.msie && $.browser.version < 7 )? 'absolute' : 'fixed',
+                	left: '50%', marginLeft: 0-($progress.width()/2), bottom: '20%'
+            	}).show();
+
+            	// Update progress bar
+            	function update_progress_info() {
+                	$progress.show();
+                	$.getJSON(progress_url, {'X-Progress-ID': uuid}, function(data, status)
+                	{
+                    	if (data) {
+
+                        	var progress = parseInt(data.uploaded) / parseInt(data.length);
+                        	var width = $progress.find('.progress-container').width()
+                        	var progress_width = width * progress;
+                        	$progress.find('.progress-bar').width(progress_width);
+                        	$progress.find('.progress-info').text('uploading ' + parseInt(progress*100) + '%');
+                    	}
+                    	window.setTimeout(update_progress_info, freq);
+                	});
+            	};
+            	window.setTimeout(update_progress_info, freq);
+
+            	$.data(this, 'submitted', true); // mark form as submitted.
+        	});
+		};
+
+
+ 		/*
+ 		 *	Generate 32 char random uuid
+ 		 */	
+ 		this.gen_uuid = function () 
+ 		{
+        	var uuid = ""
+        	for (var i=0; i < 32; i++) 
+        	{
+            	uuid += Math.floor(Math.random() * 16).toString(16);
+        	}
+        	return uuid
+    	};
+
 	};
 })(jQuery);
 

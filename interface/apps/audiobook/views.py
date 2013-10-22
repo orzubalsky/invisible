@@ -1,12 +1,8 @@
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render_to_response
+from django.http import HttpResponse, HttpResponseServerError, \
+    HttpResponseRedirect
 from django.template import RequestContext
-from django.http import HttpResponseRedirect, HttpResponse
-from django.core.urlresolvers import reverse
-from django.forms.formsets import formset_factory
-from django.core import serializers
-from django.utils import simplejson as json
-from ajaxuploader.views import AjaxFileUploader
-from django.middleware.csrf import get_token
+from django.core.cache import cache
 from audiobook.models import *
 from audiobook.forms import *
 
@@ -24,51 +20,46 @@ def book(request):
         )
         work.save()
 
+    if request.method == 'POST':
+        form = SubmissionForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/')
+    else:
+        form = SubmissionForm()
+
+
     return render_to_response('index.html', {
         'work': work,
+        'form': form,
     }, context_instance=RequestContext(request))
 
 
-def detail(request, video_id):
-    if request.method == "POST":
-        data = serializers.serialize('json', Video.objects.filter(pk=video_id))
-        return HttpResponse(data, mimetype='application/json')
-            
-    # fallback on view template
-    video = get_object_or_404(Video, pk=video_id)
-    return render_to_response('detail.html', {'video': video})
-    
-    
-def next(request, video_id):
-    if request.method == "POST":
-        current_video = get_object_or_404(Video, pk=video_id)
-        if current_video.page.number == 86:
-            next_page = 1
+def upload_progress(request):
+        """
+        A view to report back on upload progress.
+        Return JSON object with information about the progress of an upload.
+
+        Copied from:
+        http://djangosnippets.org/snippets/678/
+
+        See upload.py for file upload handler.
+        """
+        #import ipdb
+        #ipdb.set_trace()
+        progress_id = ''
+        if 'X-Progress-ID' in request.GET:
+            progress_id = request.GET['X-Progress-ID']
+        elif 'X-Progress-ID' in request.META:
+            progress_id = request.META['X-Progress-ID']
+        if progress_id:
+            from django.utils import simplejson
+            cache_key = "%s_%s" % (request.META['REMOTE_ADDR'], progress_id)
+            data = cache.get(cache_key)
+            return HttpResponse(simplejson.dumps(data))
         else:
-            next_page = current_video.page.number + 1;
-        next_video = Video.objects.filter(page__number=next_page).order_by('?')[0]
-        data = serializers.serialize('json', [next_video])
-        return HttpResponse(data, mimetype='application/json')
-
-    
-def add(request):
-    pages = Page.objects.all().order_by('number')
-    
-    if request.method == 'POST':
-        form = VideoForm(request.POST)
-        
-        if form.is_valid():
-            validForm = form.save(commit=False)
-            validForm.save_upload(form.cleaned_data.get('page_number'), form.cleaned_data.get('filename'))
-            return HttpResponseRedirect('/')                   
-    else :
-        form = VideoForm()
-    
-    return render_to_response('add.html', {'pages': pages, 'form': form}, context_instance=RequestContext(request))
-    
-
-def start(request):
-    csrf_token = get_token(request)
-    return render_to_response('import.html', {'csrf_token': csrf_token}, context_instance = RequestContext(request))
-
-import_uploader = AjaxFileUploader()
+            return HttpResponseServerError(
+                'Server Error: You must provide X-Progress-ID header '
+                'or query param.'
+            )
