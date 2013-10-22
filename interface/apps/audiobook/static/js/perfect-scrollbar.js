@@ -1,4 +1,594 @@
-/*! perfect-scrollbar - v0.4.5
-* http://noraesae.github.com/perfect-scrollbar/
-* Copyright (c) 2013 HyeonJe Jun; Licensed MIT */
-"use strict";(function(e){"function"==typeof define&&define.amd?define(["jquery"],e):e(jQuery)})(function(e){var r={wheelSpeed:10,wheelPropagation:!1,minScrollbarLength:null,useBothWheelAxes:!1,useKeyboard:!0};e.fn.perfectScrollbar=function(o,t){return this.each(function(){var l=e.extend(!0,{},r),n=e(this);if("object"==typeof o?e.extend(!0,l,o):t=o,"update"===t)return n.data("perfect-scrollbar-update")&&n.data("perfect-scrollbar-update")(),n;if("destroy"===t)return n.data("perfect-scrollbar-destroy")&&n.data("perfect-scrollbar-destroy")(),n;if(n.data("perfect-scrollbar"))return n.data("perfect-scrollbar");n.addClass("ps-container");var s,c,a,i,p,f,u,d,b,h,v=e("<div class='ps-scrollbar-x-rail'></div>").appendTo(n),g=e("<div class='ps-scrollbar-y-rail'></div>").appendTo(n),m=e("<div class='ps-scrollbar-x'></div>").appendTo(v),w=e("<div class='ps-scrollbar-y'></div>").appendTo(g),T=parseInt(v.css("bottom"),10),L=parseInt(g.css("right"),10),y=function(){var e=parseInt(h*(f-i)/(i-b),10);n.scrollTop(e),v.css({bottom:T-e})},I=function(){var e=parseInt(d*(p-a)/(a-u),10);n.scrollLeft(e),g.css({right:L-e})},D=function(e){return l.minScrollbarLength&&(e=Math.max(e,l.minScrollbarLength)),e},S=function(){v.css({left:n.scrollLeft(),bottom:T-n.scrollTop(),width:a}),g.css({top:n.scrollTop(),right:L-n.scrollLeft(),height:i}),m.css({left:d,width:u}),w.css({top:h,height:b})},x=function(){a=n.width(),i=n.height(),p=n.prop("scrollWidth"),f=n.prop("scrollHeight"),p>a?(s=!0,u=D(parseInt(a*a/p,10)),d=parseInt(n.scrollLeft()*(a-u)/(p-a),10)):(s=!1,u=0,d=0,n.scrollLeft(0)),f>i?(c=!0,b=D(parseInt(i*i/f,10)),h=parseInt(n.scrollTop()*(i-b)/(f-i),10)):(c=!1,b=0,h=0,n.scrollTop(0)),h>=i-b&&(h=i-b),d>=a-u&&(d=a-u),S()},C=function(e,r){var o=e+r,t=a-u;d=0>o?0:o>t?t:o,v.css({left:n.scrollLeft()}),m.css({left:d})},P=function(e,r){var o=e+r,t=i-b;h=0>o?0:o>t?t:o,g.css({top:n.scrollTop()}),w.css({top:h})},k=function(){var r,o;m.bind("mousedown.perfect-scrollbar",function(e){o=e.pageX,r=m.position().left,v.addClass("in-scrolling"),e.stopPropagation(),e.preventDefault()}),e(document).bind("mousemove.perfect-scrollbar",function(e){v.hasClass("in-scrolling")&&(I(),C(r,e.pageX-o),e.stopPropagation(),e.preventDefault())}),e(document).bind("mouseup.perfect-scrollbar",function(){v.hasClass("in-scrolling")&&v.removeClass("in-scrolling")}),r=o=null},X=function(){var r,o;w.bind("mousedown.perfect-scrollbar",function(e){o=e.pageY,r=w.position().top,g.addClass("in-scrolling"),e.stopPropagation(),e.preventDefault()}),e(document).bind("mousemove.perfect-scrollbar",function(e){g.hasClass("in-scrolling")&&(y(),P(r,e.pageY-o),e.stopPropagation(),e.preventDefault())}),e(document).bind("mouseup.perfect-scrollbar",function(){g.hasClass("in-scrolling")&&g.removeClass("in-scrolling")}),r=o=null},Y=function(){var e=function(e,r){var o=n.scrollTop();if(0===o&&r>0&&0===e)return!l.wheelPropagation;if(o>=f-i&&0>r&&0===e)return!l.wheelPropagation;var t=n.scrollLeft();return 0===t&&0>e&&0===r?!l.wheelPropagation:t>=p-a&&e>0&&0===r?!l.wheelPropagation:!0},r=!1;n.bind("mousewheel.perfect-scrollbar",function(o,t,a,i){l.useBothWheelAxes?c&&!s?i?n.scrollTop(n.scrollTop()-i*l.wheelSpeed):n.scrollTop(n.scrollTop()+a*l.wheelSpeed):s&&!c&&(a?n.scrollLeft(n.scrollLeft()+a*l.wheelSpeed):n.scrollLeft(n.scrollLeft()-i*l.wheelSpeed)):(n.scrollTop(n.scrollTop()-i*l.wheelSpeed),n.scrollLeft(n.scrollLeft()+a*l.wheelSpeed)),x(),r=e(a,i),r&&o.preventDefault()}),n.bind("MozMousePixelScroll.perfect-scrollbar",function(e){r&&e.preventDefault()})},M=function(){var r=function(e,r){var o=n.scrollTop();if(0===o&&r>0&&0===e)return!1;if(o>=f-i&&0>r&&0===e)return!1;var t=n.scrollLeft();return 0===t&&0>e&&0===r?!1:t>=p-a&&e>0&&0===r?!1:!0},o=!1;n.bind("mouseenter.perfect-scrollbar",function(){o=!0}),n.bind("mouseleave.perfect-scrollbar",function(){o=!1});var t=!1;e(document).bind("keydown.perfect-scrollbar",function(e){if(o){var s=0,c=0;switch(e.which){case 37:s=-3;break;case 38:c=3;break;case 39:s=3;break;case 40:c=-3;break;default:return}n.scrollTop(n.scrollTop()-c*l.wheelSpeed),n.scrollLeft(n.scrollLeft()+s*l.wheelSpeed),x(),t=r(s,c),t&&e.preventDefault()}})},E=function(){var e=function(e){e.stopPropagation()};w.bind("click.perfect-scrollbar",e),g.bind("click.perfect-scrollbar",function(e){var r=parseInt(b/2,10),o=e.pageY-g.offset().top-r,t=i-b,l=o/t;0>l?l=0:l>1&&(l=1),n.scrollTop((f-i)*l),x()}),m.bind("click.perfect-scrollbar",e),v.bind("click.perfect-scrollbar",function(e){var r=parseInt(u/2,10),o=e.pageX-v.offset().left-r,t=a-u,l=o/t;0>l?l=0:l>1&&(l=1),n.scrollLeft((p-a)*l),x()})},A=function(){var r=function(e,r){n.scrollTop(n.scrollTop()-r),n.scrollLeft(n.scrollLeft()-e),x()},o={},t=0,l={},s=null,c=!1;e(window).bind("touchstart.perfect-scrollbar",function(){c=!0}),e(window).bind("touchend.perfect-scrollbar",function(){c=!1}),n.bind("touchstart.perfect-scrollbar",function(e){var r=e.originalEvent.targetTouches[0];o.pageX=r.pageX,o.pageY=r.pageY,t=(new Date).getTime(),null!==s&&clearInterval(s),e.stopPropagation()}),n.bind("touchmove.perfect-scrollbar",function(e){if(!c&&1===e.originalEvent.targetTouches.length){var n=e.originalEvent.targetTouches[0],s={};s.pageX=n.pageX,s.pageY=n.pageY;var a=s.pageX-o.pageX,i=s.pageY-o.pageY;r(a,i),o=s;var p=(new Date).getTime();l.x=a/(p-t),l.y=i/(p-t),t=p,e.preventDefault()}}),n.bind("touchend.perfect-scrollbar",function(){clearInterval(s),s=setInterval(function(){return.01>Math.abs(l.x)&&.01>Math.abs(l.y)?(clearInterval(s),void 0):(r(30*l.x,30*l.y),l.x*=.8,l.y*=.8,void 0)},10)})},j=function(){n.unbind(".perfect-scrollbar"),e(window).unbind(".perfect-scrollbar"),e(document).unbind(".perfect-scrollbar"),n.data("perfect-scrollbar",null),n.data("perfect-scrollbar-update",null),n.data("perfect-scrollbar-destroy",null),m.remove(),w.remove(),v.remove(),g.remove(),m=w=a=i=p=f=u=d=T=b=h=L=null},W=function(r){n.addClass("ie").addClass("ie"+r);var o=function(){var r=function(){e(this).addClass("hover")},o=function(){e(this).removeClass("hover")};n.bind("mouseenter.perfect-scrollbar",r).bind("mouseleave.perfect-scrollbar",o),v.bind("mouseenter.perfect-scrollbar",r).bind("mouseleave.perfect-scrollbar",o),g.bind("mouseenter.perfect-scrollbar",r).bind("mouseleave.perfect-scrollbar",o),m.bind("mouseenter.perfect-scrollbar",r).bind("mouseleave.perfect-scrollbar",o),w.bind("mouseenter.perfect-scrollbar",r).bind("mouseleave.perfect-scrollbar",o)},t=function(){S=function(){m.css({left:d+n.scrollLeft(),bottom:T,width:u}),w.css({top:h+n.scrollTop(),right:L,height:b}),m.hide().show(),w.hide().show()},y=function(){var e=parseInt(h*f/i,10);n.scrollTop(e),m.css({bottom:T}),m.hide().show()},I=function(){var e=parseInt(d*p/a,10);n.scrollLeft(e),w.hide().show()}};6===r&&(o(),t())},H="ontouchstart"in window||window.DocumentTouch&&document instanceof window.DocumentTouch,B=function(){var e=navigator.userAgent.toLowerCase().match(/(msie) ([\w.]+)/);e&&"msie"===e[1]&&W(parseInt(e[2],10)),x(),k(),X(),E(),H&&A(),n.mousewheel&&Y(),l.useKeyboard&&M(),n.data("perfect-scrollbar",n),n.data("perfect-scrollbar-update",x),n.data("perfect-scrollbar-destroy",j)};return B(),n})}}),function(e){function r(r){var o=r||window.event,t=[].slice.call(arguments,1),l=0,n=0,s=0;return r=e.event.fix(o),r.type="mousewheel",o.wheelDelta&&(l=o.wheelDelta/120),o.detail&&(l=-o.detail/3),s=l,void 0!==o.axis&&o.axis===o.HORIZONTAL_AXIS&&(s=0,n=-1*l),void 0!==o.wheelDeltaY&&(s=o.wheelDeltaY/120),void 0!==o.wheelDeltaX&&(n=-1*o.wheelDeltaX/120),t.unshift(r,l,n,s),(e.event.dispatch||e.event.handle).apply(this,t)}var o=["DOMMouseScroll","mousewheel"];if(e.event.fixHooks)for(var t=o.length;t;)e.event.fixHooks[o[--t]]=e.event.mouseHooks;e.event.special.mousewheel={setup:function(){if(this.addEventListener)for(var e=o.length;e;)this.addEventListener(o[--e],r,!1);else this.onmousewheel=r},teardown:function(){if(this.removeEventListener)for(var e=o.length;e;)this.removeEventListener(o[--e],r,!1);else this.onmousewheel=null}},e.fn.extend({mousewheel:function(e){return e?this.bind("mousewheel",e):this.trigger("mousewheel")},unmousewheel:function(e){return this.unbind("mousewheel",e)}})}(jQuery);
+/* Copyright (c) 2012 HyeonJe Jun (http://github.com/noraesae)
+ * Licensed under the MIT License
+ */
+'use strict';
+(function (factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module.
+    define(['jquery'], factory);
+  } else {
+    // Browser globals
+    factory(jQuery);
+  }
+}(function ($) {
+
+  // The default settings for the plugin
+  var defaultSettings = {
+    wheelSpeed: 10,
+    wheelPropagation: false,
+    minScrollbarLength: null,
+    useBothWheelAxes: false,
+    useKeyboard: true
+  };
+
+  $.fn.perfectScrollbar = function (suppliedSettings, option) {
+
+    return this.each(function () {
+      // Use the default settings
+      var settings = $.extend(true, {}, defaultSettings),
+          $this = $(this);
+
+      if (typeof suppliedSettings === "object") {
+        // But over-ride any supplied
+        $.extend(true, settings, suppliedSettings);
+      } else {
+        // If no settings were supplied, then the first param must be the option
+        option = suppliedSettings;
+      }
+
+      // Catch options
+
+      if (option === 'update') {
+        if ($this.data('perfect-scrollbar-update')) {
+          $this.data('perfect-scrollbar-update')();
+        }
+        return $this;
+      }
+      else if (option === 'destroy') {
+        if ($this.data('perfect-scrollbar-destroy')) {
+          $this.data('perfect-scrollbar-destroy')();
+        }
+        return $this;
+      }
+
+      if ($this.data('perfect-scrollbar')) {
+        // if there's already perfect-scrollbar
+        return $this.data('perfect-scrollbar');
+      }
+
+
+      // Or generate new perfectScrollbar
+
+      // Set class to the container
+      $this.addClass('ps-container');
+
+      var $scrollbarXRail = $("<div class='ps-scrollbar-x-rail'></div>").appendTo($this),
+          $scrollbarYRail = $("<div class='ps-scrollbar-y-rail'></div>").appendTo($this),
+          $scrollbarX = $("<div class='ps-scrollbar-x'></div>").appendTo($scrollbarXRail),
+          $scrollbarY = $("<div class='ps-scrollbar-y'></div>").appendTo($scrollbarYRail),
+          scrollbarXActive,
+          scrollbarYActive,
+          containerWidth,
+          containerHeight,
+          contentWidth,
+          contentHeight,
+          scrollbarXWidth,
+          scrollbarXLeft,
+          scrollbarXBottom = parseInt($scrollbarXRail.css('bottom'), 10),
+          scrollbarYHeight,
+          scrollbarYTop,
+          scrollbarYRight = parseInt($scrollbarYRail.css('right'), 10);
+
+      var updateContentScrollTop = function () {
+        var scrollTop = parseInt(scrollbarYTop * (contentHeight - containerHeight) / (containerHeight - scrollbarYHeight), 10);
+        $this.scrollTop(scrollTop);
+        $scrollbarXRail.css({bottom: scrollbarXBottom - scrollTop});
+      };
+
+      var updateContentScrollLeft = function () {
+        var scrollLeft = parseInt(scrollbarXLeft * (contentWidth - containerWidth) / (containerWidth - scrollbarXWidth), 10);
+        $this.scrollLeft(scrollLeft);
+        $scrollbarYRail.css({right: scrollbarYRight - scrollLeft});
+      };
+
+      var getSettingsAdjustedThumbSize = function (thumbSize) {
+        if (settings.minScrollbarLength) {
+          thumbSize = Math.max(thumbSize, settings.minScrollbarLength);
+        }
+        return thumbSize;
+      };
+
+      var updateScrollbarCss = function () {
+        $scrollbarXRail.css({left: $this.scrollLeft(), bottom: scrollbarXBottom - $this.scrollTop(), width: containerWidth});
+        $scrollbarYRail.css({top: $this.scrollTop(), right: scrollbarYRight - $this.scrollLeft(), height: containerHeight});
+        $scrollbarX.css({left: scrollbarXLeft, width: scrollbarXWidth});
+        $scrollbarY.css({top: scrollbarYTop, height: scrollbarYHeight});
+      };
+
+      var updateBarSizeAndPosition = function () {
+        containerWidth = $this.width();
+        containerHeight = $this.height();
+        contentWidth = $this.prop('scrollWidth');
+        contentHeight = $this.prop('scrollHeight');
+
+        if (containerWidth < contentWidth) {
+          scrollbarXActive = true;
+          scrollbarXWidth = getSettingsAdjustedThumbSize(parseInt(containerWidth * containerWidth / contentWidth, 10));
+          scrollbarXLeft = parseInt($this.scrollLeft() * (containerWidth - scrollbarXWidth) / (contentWidth - containerWidth), 10);
+        }
+        else {
+          scrollbarXActive = false;
+          scrollbarXWidth = 0;
+          scrollbarXLeft = 0;
+          $this.scrollLeft(0);
+        }
+
+        if (containerHeight < contentHeight) {
+          scrollbarYActive = true;
+          scrollbarYHeight = getSettingsAdjustedThumbSize(parseInt(containerHeight * containerHeight / contentHeight, 10));
+          scrollbarYTop = parseInt($this.scrollTop() * (containerHeight - scrollbarYHeight) / (contentHeight - containerHeight), 10);
+        }
+        else {
+          scrollbarYActive = false;
+          scrollbarYHeight = 0;
+          scrollbarYTop = 0;
+          $this.scrollTop(0);
+        }
+
+        if (scrollbarYTop >= containerHeight - scrollbarYHeight) {
+          scrollbarYTop = containerHeight - scrollbarYHeight;
+        }
+        if (scrollbarXLeft >= containerWidth - scrollbarXWidth) {
+          scrollbarXLeft = containerWidth - scrollbarXWidth;
+        }
+
+        updateScrollbarCss();
+      };
+
+      var moveBarX = function (currentLeft, deltaX) {
+        var newLeft = currentLeft + deltaX,
+            maxLeft = containerWidth - scrollbarXWidth;
+
+        if (newLeft < 0) {
+          scrollbarXLeft = 0;
+        }
+        else if (newLeft > maxLeft) {
+          scrollbarXLeft = maxLeft;
+        }
+        else {
+          scrollbarXLeft = newLeft;
+        }
+        $scrollbarXRail.css({left: $this.scrollLeft()});
+        $scrollbarX.css({left: scrollbarXLeft});
+      };
+
+      var moveBarY = function (currentTop, deltaY) {
+        var newTop = currentTop + deltaY,
+            maxTop = containerHeight - scrollbarYHeight;
+
+        if (newTop < 0) {
+          scrollbarYTop = 0;
+        }
+        else if (newTop > maxTop) {
+          scrollbarYTop = maxTop;
+        }
+        else {
+          scrollbarYTop = newTop;
+        }
+        $scrollbarYRail.css({top: $this.scrollTop()});
+        $scrollbarY.css({top: scrollbarYTop});
+      };
+
+      var bindMouseScrollXHandler = function () {
+        var currentLeft,
+            currentPageX;
+
+        $scrollbarX.bind('mousedown.perfect-scrollbar', function (e) {
+          currentPageX = e.pageX;
+          currentLeft = $scrollbarX.position().left;
+          $scrollbarXRail.addClass('in-scrolling');
+          e.stopPropagation();
+          e.preventDefault();
+        });
+
+        $(document).bind('mousemove.perfect-scrollbar', function (e) {
+          if ($scrollbarXRail.hasClass('in-scrolling')) {
+            updateContentScrollLeft();
+            moveBarX(currentLeft, e.pageX - currentPageX);
+            e.stopPropagation();
+            e.preventDefault();
+          }
+        });
+
+        $(document).bind('mouseup.perfect-scrollbar', function (e) {
+          if ($scrollbarXRail.hasClass('in-scrolling')) {
+            $scrollbarXRail.removeClass('in-scrolling');
+          }
+        });
+
+        currentLeft =
+        currentPageX = null;
+      };
+
+      var bindMouseScrollYHandler = function () {
+        var currentTop,
+            currentPageY;
+
+        $scrollbarY.bind('mousedown.perfect-scrollbar', function (e) {
+          currentPageY = e.pageY;
+          currentTop = $scrollbarY.position().top;
+          $scrollbarYRail.addClass('in-scrolling');
+          e.stopPropagation();
+          e.preventDefault();
+        });
+
+        $(document).bind('mousemove.perfect-scrollbar', function (e) {
+          if ($scrollbarYRail.hasClass('in-scrolling')) {
+            updateContentScrollTop();
+            moveBarY(currentTop, e.pageY - currentPageY);
+            e.stopPropagation();
+            e.preventDefault();
+          }
+        });
+
+        $(document).bind('mouseup.perfect-scrollbar', function (e) {
+          if ($scrollbarYRail.hasClass('in-scrolling')) {
+            $scrollbarYRail.removeClass('in-scrolling');
+          }
+        });
+
+        currentTop =
+        currentPageY = null;
+      };
+
+      // bind handlers
+      var bindMouseWheelHandler = function () {
+        var shouldPreventDefault = function (deltaX, deltaY) {
+          var scrollTop = $this.scrollTop();
+          if (scrollTop === 0 && deltaY > 0 && deltaX === 0) {
+            return !settings.wheelPropagation;
+          }
+          else if (scrollTop >= contentHeight - containerHeight && deltaY < 0 && deltaX === 0) {
+            return !settings.wheelPropagation;
+          }
+
+          var scrollLeft = $this.scrollLeft();
+          if (scrollLeft === 0 && deltaX < 0 && deltaY === 0) {
+            return !settings.wheelPropagation;
+          }
+          else if (scrollLeft >= contentWidth - containerWidth && deltaX > 0 && deltaY === 0) {
+            return !settings.wheelPropagation;
+          }
+          return true;
+        };
+
+        var shouldPrevent = false;
+        $this.bind('mousewheel.perfect-scrollbar', function (e, delta, deltaX, deltaY) {
+          if (!settings.useBothWheelAxes) {
+            // deltaX will only be used for horizontal scrolling and deltaY will
+            // only be used for vertical scrolling - this is the default
+            $this.scrollTop($this.scrollTop() - (deltaY * settings.wheelSpeed));
+            $this.scrollLeft($this.scrollLeft() + (deltaX * settings.wheelSpeed));
+          } else if (scrollbarYActive && !scrollbarXActive) {
+            // only vertical scrollbar is active and useBothWheelAxes option is
+            // active, so let's scroll vertical bar using both mouse wheel axes
+            if (deltaY) {
+              $this.scrollTop($this.scrollTop() - (deltaY * settings.wheelSpeed));
+            } else {
+              $this.scrollTop($this.scrollTop() + (deltaX * settings.wheelSpeed));
+            }
+          } else if (scrollbarXActive && !scrollbarYActive) {
+            // useBothWheelAxes and only horizontal bar is active, so use both
+            // wheel axes for horizontal bar
+            if (deltaX) {
+              $this.scrollLeft($this.scrollLeft() + (deltaX * settings.wheelSpeed));
+            } else {
+              $this.scrollLeft($this.scrollLeft() - (deltaY * settings.wheelSpeed));
+            }
+          }
+
+          // update bar position
+          updateBarSizeAndPosition();
+
+          shouldPrevent = shouldPreventDefault(deltaX, deltaY);
+          if (shouldPrevent) {
+            e.preventDefault();
+          }
+        });
+
+        // fix Firefox scroll problem
+        $this.bind('MozMousePixelScroll.perfect-scrollbar', function (e) {
+          if (shouldPrevent) {
+            e.preventDefault();
+          }
+        });
+      };
+
+      var bindKeyboardHandler = function () {
+        var shouldPreventDefault = function (deltaX, deltaY) {
+          var scrollTop = $this.scrollTop();
+          if (scrollTop === 0 && deltaY > 0 && deltaX === 0) {
+            return false;
+          }
+          else if (scrollTop >= contentHeight - containerHeight && deltaY < 0 && deltaX === 0) {
+            return false;
+          }
+
+          var scrollLeft = $this.scrollLeft();
+          if (scrollLeft === 0 && deltaX < 0 && deltaY === 0) {
+            return false;
+          }
+          else if (scrollLeft >= contentWidth - containerWidth && deltaX > 0 && deltaY === 0) {
+            return false;
+          }
+          return true;
+        };
+
+        var hovered = false;
+        $this.bind('mouseenter.perfect-scrollbar', function (e) {
+          hovered = true;
+        });
+        $this.bind('mouseleave.perfect-scrollbar', function (e) {
+          hovered = false;
+        });
+
+        var shouldPrevent = false;
+        $(document).bind('keydown.perfect-scrollbar', function (e) {
+          if (!hovered) {
+            return;
+          }
+
+          var deltaX = 0,
+              deltaY = 0;
+
+          switch (e.which) {
+          case 37: // left
+            deltaX = -3;
+            break;
+          case 38: // up
+            deltaY = 3;
+            break;
+          case 39: // right
+            deltaX = 3;
+            break;
+          case 40: // down
+            deltaY = -3;
+            break;
+          default:
+            return;
+          }
+
+          $this.scrollTop($this.scrollTop() - (deltaY * settings.wheelSpeed));
+          $this.scrollLeft($this.scrollLeft() + (deltaX * settings.wheelSpeed));
+
+          // update bar position
+          updateBarSizeAndPosition();
+
+          shouldPrevent = shouldPreventDefault(deltaX, deltaY);
+          if (shouldPrevent) {
+            e.preventDefault();
+          }
+        });
+      };
+
+      var bindRailClickHandler = function () {
+        var stopPropagation = function (e) { e.stopPropagation(); };
+
+        $scrollbarY.bind('click.perfect-scrollbar', stopPropagation);
+        $scrollbarYRail.bind('click.perfect-scrollbar', function (e) {
+          var halfOfScrollbarLength = parseInt(scrollbarYHeight / 2, 10),
+              positionTop = e.pageY - $scrollbarYRail.offset().top - halfOfScrollbarLength,
+              maxPositionTop = containerHeight - scrollbarYHeight,
+              positionRatio = positionTop / maxPositionTop;
+
+          if (positionRatio < 0) {
+            positionRatio = 0;
+          } else if (positionRatio > 1) {
+            positionRatio = 1;
+          }
+
+          $this.scrollTop((contentHeight - containerHeight) * positionRatio);
+
+          // update bar position
+          updateBarSizeAndPosition();
+        });
+
+        $scrollbarX.bind('click.perfect-scrollbar', stopPropagation);
+        $scrollbarXRail.bind('click.perfect-scrollbar', function (e) {
+          var halfOfScrollbarLength = parseInt(scrollbarXWidth / 2, 10),
+              positionLeft = e.pageX - $scrollbarXRail.offset().left - halfOfScrollbarLength,
+              maxPositionLeft = containerWidth - scrollbarXWidth,
+              positionRatio = positionLeft / maxPositionLeft;
+
+          if (positionRatio < 0) {
+            positionRatio = 0;
+          } else if (positionRatio > 1) {
+            positionRatio = 1;
+          }
+
+          $this.scrollLeft((contentWidth - containerWidth) * positionRatio);
+
+          // update bar position
+          updateBarSizeAndPosition();
+        });
+      };
+
+      // bind mobile touch handler
+      var bindMobileTouchHandler = function () {
+        var applyTouchMove = function (differenceX, differenceY) {
+          $this.scrollTop($this.scrollTop() - differenceY);
+          $this.scrollLeft($this.scrollLeft() - differenceX);
+
+          // update bar position
+          updateBarSizeAndPosition();
+        };
+
+        var startCoords = {},
+            startTime = 0,
+            speed = {},
+            breakingProcess = null,
+            inGlobalTouch = false;
+
+        $(window).bind("touchstart.perfect-scrollbar", function (e) {
+          inGlobalTouch = true;
+        });
+        $(window).bind("touchend.perfect-scrollbar", function (e) {
+          inGlobalTouch = false;
+        });
+
+        $this.bind("touchstart.perfect-scrollbar", function (e) {
+          var touch = e.originalEvent.targetTouches[0];
+
+          startCoords.pageX = touch.pageX;
+          startCoords.pageY = touch.pageY;
+
+          startTime = (new Date()).getTime();
+
+          if (breakingProcess !== null) {
+            clearInterval(breakingProcess);
+          }
+
+          e.stopPropagation();
+        });
+        $this.bind("touchmove.perfect-scrollbar", function (e) {
+          if (!inGlobalTouch && e.originalEvent.targetTouches.length === 1) {
+            var touch = e.originalEvent.targetTouches[0];
+
+            var currentCoords = {};
+            currentCoords.pageX = touch.pageX;
+            currentCoords.pageY = touch.pageY;
+
+            var differenceX = currentCoords.pageX - startCoords.pageX,
+              differenceY = currentCoords.pageY - startCoords.pageY;
+
+            applyTouchMove(differenceX, differenceY);
+            startCoords = currentCoords;
+
+            var currentTime = (new Date()).getTime();
+            speed.x = differenceX / (currentTime - startTime);
+            speed.y = differenceY / (currentTime - startTime);
+            startTime = currentTime;
+
+            e.preventDefault();
+          }
+        });
+        $this.bind("touchend.perfect-scrollbar", function (e) {
+          clearInterval(breakingProcess);
+          breakingProcess = setInterval(function () {
+            if (Math.abs(speed.x) < 0.01 && Math.abs(speed.y) < 0.01) {
+              clearInterval(breakingProcess);
+              return;
+            }
+
+            applyTouchMove(speed.x * 30, speed.y * 30);
+
+            speed.x *= 0.8;
+            speed.y *= 0.8;
+          }, 10);
+        });
+      };
+
+      var destroy = function () {
+        $this.unbind('.perfect-scrollbar');
+        $(window).unbind('.perfect-scrollbar');
+        $(document).unbind('.perfect-scrollbar');
+        $this.data('perfect-scrollbar', null);
+        $this.data('perfect-scrollbar-update', null);
+        $this.data('perfect-scrollbar-destroy', null);
+        $scrollbarX.remove();
+        $scrollbarY.remove();
+        $scrollbarXRail.remove();
+        $scrollbarYRail.remove();
+
+        // clean all variables
+        $scrollbarX =
+        $scrollbarY =
+        containerWidth =
+        containerHeight =
+        contentWidth =
+        contentHeight =
+        scrollbarXWidth =
+        scrollbarXLeft =
+        scrollbarXBottom =
+        scrollbarYHeight =
+        scrollbarYTop =
+        scrollbarYRight = null;
+      };
+
+      var ieSupport = function (version) {
+        $this.addClass('ie').addClass('ie' + version);
+
+        var bindHoverHandlers = function () {
+          var mouseenter = function () {
+            $(this).addClass('hover');
+          };
+          var mouseleave = function () {
+            $(this).removeClass('hover');
+          };
+          $this.bind('mouseenter.perfect-scrollbar', mouseenter).bind('mouseleave.perfect-scrollbar', mouseleave);
+          $scrollbarXRail.bind('mouseenter.perfect-scrollbar', mouseenter).bind('mouseleave.perfect-scrollbar', mouseleave);
+          $scrollbarYRail.bind('mouseenter.perfect-scrollbar', mouseenter).bind('mouseleave.perfect-scrollbar', mouseleave);
+          $scrollbarX.bind('mouseenter.perfect-scrollbar', mouseenter).bind('mouseleave.perfect-scrollbar', mouseleave);
+          $scrollbarY.bind('mouseenter.perfect-scrollbar', mouseenter).bind('mouseleave.perfect-scrollbar', mouseleave);
+        };
+
+        var fixIe6ScrollbarPosition = function () {
+          updateScrollbarCss = function () {
+            $scrollbarX.css({left: scrollbarXLeft + $this.scrollLeft(), bottom: scrollbarXBottom, width: scrollbarXWidth});
+            $scrollbarY.css({top: scrollbarYTop + $this.scrollTop(), right: scrollbarYRight, height: scrollbarYHeight});
+            $scrollbarX.hide().show();
+            $scrollbarY.hide().show();
+          };
+          updateContentScrollTop = function () {
+            var scrollTop = parseInt(scrollbarYTop * contentHeight / containerHeight, 10);
+            $this.scrollTop(scrollTop);
+            $scrollbarX.css({bottom: scrollbarXBottom});
+            $scrollbarX.hide().show();
+          };
+          updateContentScrollLeft = function () {
+            var scrollLeft = parseInt(scrollbarXLeft * contentWidth / containerWidth, 10);
+            $this.scrollLeft(scrollLeft);
+            $scrollbarY.hide().show();
+          };
+        };
+
+        if (version === 6) {
+          bindHoverHandlers();
+          fixIe6ScrollbarPosition();
+        }
+      };
+
+      var supportsTouch = (('ontouchstart' in window) || window.DocumentTouch && document instanceof window.DocumentTouch);
+
+      var initialize = function () {
+        var ieMatch = navigator.userAgent.toLowerCase().match(/(msie) ([\w.]+)/);
+        if (ieMatch && ieMatch[1] === 'msie') {
+          // must be executed at first, because 'ieSupport' may addClass to the container
+          ieSupport(parseInt(ieMatch[2], 10));
+        }
+
+        updateBarSizeAndPosition();
+        bindMouseScrollXHandler();
+        bindMouseScrollYHandler();
+        bindRailClickHandler();
+        if (supportsTouch) {
+          bindMobileTouchHandler();
+        }
+        if ($this.mousewheel) {
+          bindMouseWheelHandler();
+        }
+        if (settings.useKeyboard) {
+          bindKeyboardHandler();
+        }
+        $this.data('perfect-scrollbar', $this);
+        $this.data('perfect-scrollbar-update', updateBarSizeAndPosition);
+        $this.data('perfect-scrollbar-destroy', destroy);
+      };
+
+      // initialize
+      initialize();
+
+      return $this;
+    });
+  };
+}));
