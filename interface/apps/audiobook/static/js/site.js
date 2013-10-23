@@ -18,7 +18,8 @@
 		    this.storeCsrvToken();
 		    this.initializePlayer();
 		    this.displayPageNumber();
-            this.pageInteraction();	   
+            this.pageInteraction();	 
+            this.formInteraction();  
             //this.HandleUploadForm(); 
 		};	
 		
@@ -138,6 +139,20 @@
 				$('#default_text').text(filename);
 			});
 
+ 		};
+
+
+ 		/*
+ 		 *	close form interaction
+ 		 */	
+ 		this.formInteraction = function()
+ 		{
+ 			var self = this;
+
+ 			$('#close').bind('click', function(e)
+ 			{
+ 				$('#upload_bg').fadeOut(100);
+			});
  		};
 
 
