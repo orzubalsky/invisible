@@ -63,6 +63,9 @@ body {
 
 
 /*jplayer yo*/
+div#jquery_jplayer_1 {
+	
+}
 div.jp-audio, div.jp-audio-stream, div.jp-video {
 
     border: 0;
@@ -105,6 +108,7 @@ div.jp-seek-bar {
 }
 a.jp-play {
 	background: url("../blue.monday/invisible.buttons.png") 0 0 no-repeat;
+	display: none;
 }
 a.jp-play:hover {
 	background: url("../blue.monday/invisible.buttons.png") -41px 0 no-repeat;

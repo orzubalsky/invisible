@@ -41,12 +41,19 @@
 		{
 			var self = this;
 
+			$('.jp-controls').hide();
+
 			$("#jquery_jplayer_1").jPlayer({
 				ready: function(event){},
 		        swfPath: STATIC_URL + "js",
 				supplied: "mp3",
 				wmode: "window"
 			});
+
+			$("#jquery_jplayer_1").bind($.jPlayer.event.ready, function(event)
+			{
+				$('.jp-controls').fadeIn(200);
+			});		
 
 			$("#jquery_jplayer_1").bind($.jPlayer.event.ended, function(event)
 			{
