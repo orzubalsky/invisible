@@ -145,7 +145,7 @@ a.jp-play, a.jp-pause {
 }
 #upload_bg #default_text {
 	position:absolute;
-	top:20px;
+	top:35px;
 	left:20px;
 	border:1pt solid #EEE;
 	padding:4px 5px;
@@ -157,4 +157,11 @@ a.jp-play, a.jp-pause {
 #upload_form #file_submit:hover {
 	background: #757575;
 	color: white; 
+}
+#close {
+	background:url("tiny_close.png") no-repeat;
+	float:right;
+	margin:10px 20px;
+	width:5px;
+	height:5px;
 }

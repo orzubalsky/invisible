@@ -4,6 +4,7 @@
 
 <div id="upload_bg">
 	<div id="default_text">Choose file for page</div>
+	<div id="close"><a href="" /></a></div>
 	<div id="upload_form" >
        <form id="upload" name="sound_upload" action="{% url 'book' %}" enctype="multipart/form-data" method="POST">{% csrf_token %}
             {% if form.errors %}
