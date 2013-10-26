@@ -2,7 +2,17 @@ from django.db.models import *
 from django.db.models.query import QuerySet
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
+from django.core.files.storage import FileSystemStorage
+from django.conf import settings
 from django.template.defaultfilters import slugify
+
+
+# set upload directory to use the UPLOAD_ROOT set in settings
+# UPLOAD_ROOT is defined differently in development or production
+file_storage = FileSystemStorage(
+    location=settings.UPLOAD_ROOT,
+    base_url='/uploads'
+)
 
 
 class Base(Model):
@@ -121,6 +131,7 @@ class Submission(Base):
 
     page = OneToOneField(Page)
     audio_file = FileField(
+        storage=file_storage,
         upload_to=audio_filename,
     )
 

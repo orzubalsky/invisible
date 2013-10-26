@@ -93,3 +93,5 @@ MEDIA_ROOT = '/home/media'
 
 # API keys
 GOOGLE_API_KEY = ''
+
+UPLOAD_ROOT = STATIC_ROOT
