@@ -26,6 +26,9 @@ body {
 #book .uploaded {
 	background-color: yellow;
 }
+#book .playing {
+	background-color: red;
+}
 #sounds {
 	padding:0;
 	margin:0;

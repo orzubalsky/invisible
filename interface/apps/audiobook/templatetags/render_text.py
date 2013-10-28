@@ -1,5 +1,4 @@
 from django import template
-import re
 
 register = template.Library()
 
@@ -27,9 +26,8 @@ class TextRenderNode(template.Node):
         html = work.text
 
         for submission in work.textworksubmission_set.all():
-            html = html[:submission.start_index] + '<span class="uploaded">' + html[submission.start_index:]
+            html = html[:submission.start_index] + '<span class="uploaded" id="static/' + str(submission.audio_file.name) + '">' + html[submission.start_index:]
             html = html[:submission.end_index] + '</span>' + html[submission.end_index:]
-            print html
 
         return html
 

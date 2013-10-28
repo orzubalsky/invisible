@@ -18,7 +18,8 @@
 		    this.storeCsrvToken();
 		    this.initializePlayer();
 		    //this.displayPageNumber();
-            //this.pageInteraction();	 
+            //this.pageInteraction();
+            this.textInteraction(); 
             this.formInteraction();  
 			// this.invisibilityShield();
             //this.HandleUploadForm(); 
@@ -90,6 +91,42 @@
 		};
 
 
+
+	    /*
+	     *  Binds events to play submissions when text is clicked on
+	     */		
+		this.textInteraction = function()
+		{
+			var self = this;
+
+ 		    $('#book > span').live('click', function(e) 
+ 		    {
+ 		        e.preventDefault();
+				
+ 		        if ($(this).hasClass('uploaded'))
+ 		        {
+ 		        	var audio_file = $(this).attr('id');
+
+ 		        	self.loadAudio(audio_file, this);
+ 		        }
+ 		        
+ 		        if ($(this).hasClass('selected'))
+ 		        {
+ 		        	//
+ 		        }	    
+      		});
+
+ 		    // update file label with selected filename 
+ 		    // when a file is selected
+			$("input#id_audio_file").change(function () 
+			{
+				var filename = $(this).val().split('\\').pop();
+				$('#default_text').text(filename);
+			});
+		};
+
+
+
 	    /*
 	     *  Update the position and text of #page div depending
 	     *  on the page that the mouse cursor is on
@@ -142,7 +179,7 @@
  		/*
  		 *	Respond to mouse clicks on pages depending on the status of the page.  
  		 */	
- 		this.pageInteraction = function() 
+ 		this.pageInteractions = function() 
  		{		    
  		    var self = this;
 
@@ -201,7 +238,7 @@
  		/*
  		 *	Play audio file and load page in google book
  		 */	
- 		this.loadAudio = function(page_number, audio_file, element)
+ 		this.loadAudio = function(audio_file, element)
  		{
  			var self = this;
 
@@ -211,7 +248,7 @@
 			});
 			$("#jquery_jplayer_1").jPlayer("play");
 
-			$('#sounds a').removeClass('playing');
+			$('#book span').removeClass('playing');
 			$(element).addClass('playing');
  		};
 
