@@ -47,7 +47,8 @@ body {
 	background:#333;
 }
 #sounds a.empty {
-	background: #FFF;
+	background: #444;
+	opacity: 0;
 }
 #sounds a.empty:hover {
 

@@ -96,13 +96,13 @@
 	     */	
 		this.displayPageNumber = function()
 		{
-			$("#sounds a").hover(function()
+			$("#sounds a").mouseover(function()
 			{
 				var id_string = $(this).attr('id');
 				var page_number = lib.getId(id_string);
 				$('#page span').text(page_number);
 				$("#page").show();
-				$( "#sounds a" ).animate({
+				$(this).animate({
 					opacity:1
 					}, 100, function() {
 					// Animation complete.
@@ -111,7 +111,7 @@
 			$("#sounds a").mouseleave(function()
 			{
 				$("#page").hide();
-				$( "#sounds a" ).animate({
+				$(this).animate({
 					opacity:0
 					}, 100, function() {
 					// Animation complete.
