@@ -6,7 +6,7 @@
 	<div id="default_text">Choose file for page</div>
 	<div id="close"><a href="" /></a></div>
 	<div id="upload_form" >
-       <form id="upload" name="sound_upload" action="{% url 'book' %}" enctype="multipart/form-data" method="POST">{% csrf_token %}
+       <form id="upload" name="sound_upload" action="." enctype="multipart/form-data" method="POST">{% csrf_token %}
             {% if form.errors %}
             <div id="errors">
             {% for field in form %}
@@ -16,7 +16,8 @@
             {% endif %}
             
             {{ form.audio_file }}
-            {{ form.page }}
+            {{ form.start_index }}
+            {{ form.end_index }}
             
             <br/><br/>
             <input id="file_submit" type="submit" value="Upload">
@@ -24,49 +25,9 @@
 	</div>
 </div>
 <div id="jquery_jplayer_1" class="jp-jplayer"></div>
-<div id="jp_container_1" class="jp-audio">
-    <div class="jp-type-single">
-        <div class="jp-gui jp-interface">
-            <ul class="jp-controls">
-                <li>
-                    <a href="javascript:;" class="jp-play" tabindex="1">play</a>
-                </li>
-                <li>
-                    <a href="javascript:;" class="jp-pause" tabindex="1">pause</a>
-                </li>
-            </ul>
-            <div class="jp-progress">
-                <div class="jp-seek-bar">
-                    <div class="jp-play-bar"></div>
-                </div>
-            </div>
-            <div class="jp-time-holder">
-                <div class="jp-current-time"></div>
-                <div class="jp-duration"></div>
-            </div>
-        </div>
-        <div class="jp-no-solution">
-            <span>Update Required</span>
-            To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
-        </div>
-    </div>
-    <div id="player">
-        <div id="sounds">
-            {% for page in work.page_set.all %}
-                {% if page.submission.audio_file %}
-                <a id="page_{{ forloop.counter}}" class="uploaded"><span id="{{ STATIC_URL }}{{ page.submission.audio_file.name }}"></span></a>
-                {% else %}
-                <a id="page_{{ forloop.counter}}" class="empty"></a>                
-                {% endif %}
-            {% endfor %}
-        </div>
-    </div>
-</div>
-
-<div id="page">PAGE <span id="page_number">#</span></div>
 
 <div id="book">
-    {{ work.embed_code|safe }}
+    {{ work.text|safe }}
 </div>
 
 {% endblock content %}

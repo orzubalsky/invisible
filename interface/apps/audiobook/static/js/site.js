@@ -17,10 +17,10 @@
 		{		
 		    this.storeCsrvToken();
 		    this.initializePlayer();
-		    this.displayPageNumber();
-            this.pageInteraction();	 
+		    //this.displayPageNumber();
+            //this.pageInteraction();	 
             this.formInteraction();  
-			this.invisibilityShield();
+			// this.invisibilityShield();
             //this.HandleUploadForm(); 
 			
 			
@@ -63,7 +63,7 @@
 		{
 			var self = this;
 
-			$('.jp-controls').hide();
+			// $('.jp-controls').hide();
 
 			$("#jquery_jplayer_1").jPlayer({
 				ready: function(event){},
@@ -72,20 +72,20 @@
 				wmode: "window"
 			});
 
-			$("#jquery_jplayer_1").bind($.jPlayer.event.ready, function(event)
-			{
-				$('.jp-controls').fadeIn(200);
-			});		
+			// $("#jquery_jplayer_1").bind($.jPlayer.event.ready, function(event)
+			// {
+			// 	$('.jp-controls').fadeIn(200);
+			// });		
 
 			$("#jquery_jplayer_1").bind($.jPlayer.event.ended, function(event)
 			{
-  				var next_element = self.getNextPlayableAudio();
+  				// var next_element = self.getNextPlayableAudio();
 
- 	        	var page_number = lib.getId($(next_element).attr('id'));
-				self.loadGoogleBookPage(page_number);
+ 	        	// var page_number = lib.getId($(next_element).attr('id'));
+				// self.loadGoogleBookPage(page_number);
 
-				var audio_file = $('span', next_element).attr('id');
-				self.loadAudio(page_number, audio_file, next_element);
+				// var audio_file = $('span', next_element).attr('id');
+				// self.loadAudio(page_number, audio_file, next_element);
 			});			
 		};
 
@@ -101,7 +101,9 @@
 				var id_string = $(this).attr('id');
 				var page_number = lib.getId(id_string);
 				$('#page span').text(page_number);
+
 				$("#page").show();
+
 				$(this).animate({
 					opacity:1
 					}, 100, function() {
@@ -111,6 +113,7 @@
 			$("#sounds a").mouseleave(function()
 			{
 				$("#page").hide();
+
 				$(this).animate({
 					opacity:0
 					}, 100, function() {

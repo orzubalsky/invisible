@@ -1,4 +1,4 @@
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponse, HttpResponseServerError, \
     HttpResponseRedirect
 from django.template import RequestContext
@@ -7,13 +7,33 @@ from audiobook.models import *
 from audiobook.forms import *
 
 
-def book(request):
+def textwork(request):
+    """
+    """
+    work = get_object_or_404(TextWork, name='invisible man')
+
+    if request.method == 'POST':
+        form = TextWorkSubmissionForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/')
+    else:
+        form = TextWorkSubmissionForm()
+
+    return render_to_response('index.html', {
+        'work': work,
+        'form': form,
+    }, context_instance=RequestContext(request))
+
+
+def googlebook(request):
     """
     """
     try:
-        work = Work.objects.get(name='invisible man')
-    except Work.DoesNotExist:
-        work = Work(
+        work = GoogleBookWork.objects.get(name='invisible man')
+    except GoogleBookWork.DoesNotExist:
+        work = GoogleBookWork(
             name='invisible man',
             page_count=600,
             embed_code='<iframe frameborder="0" scrolling="no" style="border-bottom:2px solid #AAA" src="http://books.google.fr/books?id=YpTA74jz018C&lpg=PP1&hl=fr&pg=PP1&output=embed" width=500 height=500></iframe>'
@@ -21,16 +41,16 @@ def book(request):
         work.save()
 
     if request.method == 'POST':
-        form = SubmissionForm(request.POST, request.FILES)
+        form = GoogleBookSubmissionForm(request.POST, request.FILES)
 
         if form.is_valid():
             form.save()
             return HttpResponseRedirect('/')
     else:
-        form = SubmissionForm()
+        form = GoogleBookSubmissionForm()
 
 
-    return render_to_response('index.html', {
+    return render_to_response('googlebook.html', {
         'work': work,
         'form': form,
     }, context_instance=RequestContext(request))

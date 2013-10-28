@@ -2,9 +2,19 @@ from django.forms import *
 from audiobook.models import *
 
 
-class SubmissionForm(ModelForm):
+class TextWorkSubmissionForm(ModelForm):
     class Meta:
-        model = Submission
+        model = TextWorkSubmission
+        fields = ['audio_file', 'start_index', 'end_index']
+
+    audio_file = forms.FileField(
+        error_messages={'required': 'Please upload an audio file'}
+    )
+
+
+class GoogleBookSubmissionForm(ModelForm):
+    class Meta:
+        model = GoogleBookWorkSubmission
         fields = ['audio_file', 'page']
 
     page = forms.ModelChoiceField(
@@ -14,3 +24,4 @@ class SubmissionForm(ModelForm):
     audio_file = forms.FileField(
         error_messages={'required': 'Please upload an audio file'}
     )
+

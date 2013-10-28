@@ -2,25 +2,20 @@ from audiobook.models import *
 from django.contrib import admin
 
 
-class SubmissionsInline(admin.TabularInline):
-    model = Submission
+class TextWorkSubmissionInline(admin.TabularInline):
+    model = TextWorkSubmission
     extra = 2
-    fields = ['page', 'audio_file']
+    fields = ['work', 'start_index', 'end_index', 'audio_file']
 
 
-class SubmissionAdmin(admin.ModelAdmin):
-    fields = ['page', 'audio_file', 'is_active']
+class TextWorkSubmissionAdmin(admin.ModelAdmin):
+    fields = ['work', 'start_index', 'end_index', 'audio_file', 'is_active']
 
 
-class PageAdmin(admin.ModelAdmin):
-    inlines = [SubmissionsInline]
-    list_display = ('work', 'number')
+class TextWorkAdmin(admin.ModelAdmin):
+    inlines = [TextWorkSubmissionInline]
+    list_display = ('name', 'text')
 
 
-class WorkAdmin(admin.ModelAdmin):
-    list_display = ('name', 'page_count')
-
-
-admin.site.register(Work, WorkAdmin)
-admin.site.register(Page, PageAdmin)
-admin.site.register(Submission, SubmissionAdmin)
+admin.site.register(TextWork, TextWorkAdmin)
+admin.site.register(TextWorkSubmission, TextWorkSubmissionAdmin)

@@ -41,26 +41,37 @@ class Base(Model):
             return "%s" % (type(self))
 
 
-class WorkQuerySet(QuerySet):
-    def public(self):
-        return self.filter(is_active=True)
-
-
-class WorkManager(Manager):
-    def get_query_set(self):
-        return WorkQuerySet(self.model, using=self._db).select_related(
-            'page__submission', ).prefetch_related('page_set')
-
-
 class Work(Base):
     """
     A work to be read collectively.
     """
+    class Meta:
+        abstract = True
+
     name = CharField(
         verbose_name=_("name"),
         max_length=200,
         help_text=_("The title of the book or text")
     )
+
+
+class GoogleBookWorkQuerySet(QuerySet):
+    def public(self):
+        return self.filter(is_active=True)
+
+
+class GoogleBookWorkManager(Manager):
+    def get_query_set(self):
+        return GoogleBookWorkQuerySet(
+            self.model,
+            using=self._db
+        ).select_related(
+            'page__submission', ).prefetch_related('page_set')
+
+
+class GoogleBookWork(Work):
+    """
+    """
     page_count = IntegerField(
         verbose_name=_("Page count"),
         help_text=_("The number of pages in the book or text")
@@ -74,7 +85,8 @@ class Work(Base):
             "the embed code can be pasted below"
         )
     )
-    objects = WorkManager()
+
+    objects = GoogleBookWorkManager()
 
     def save(self, *args, **kwargs):
         """Create Page objects if saved for the first time."""
@@ -106,7 +118,7 @@ class Page(Base):
     class Meta:
         ordering = ['work', 'number']
 
-    work = ForeignKey(Work)
+    work = ForeignKey(GoogleBookWork)
     number = IntegerField(verbose_name=_("Page Number"))
 
     objects = PageManager()
@@ -115,7 +127,7 @@ class Page(Base):
         return "page %i in %s" % (self.number, self.work)
 
 
-class Submission(Base):
+class GoogleBookWorkSubmission(Base):
     """
     A submission for a single page in the work.
     """
@@ -130,6 +142,39 @@ class Submission(Base):
         )
 
     page = OneToOneField(Page)
+    audio_file = FileField(
+        storage=file_storage,
+        upload_to=audio_filename,
+    )
+
+    def __unicode__(self):
+        return "audio for %s" % (self.page)
+
+
+class TextWork(Work):
+    """
+    """
+    text = TextField(verbose_name=_("Full Text"), blank=False, null=False)
+
+
+class TextWorkSubmission(Base):
+    """
+    A submission for a single page in the work.
+    """
+    class Meta:
+        ordering = ['start_index']
+
+    def audio_filename(self, filename):
+        return 'uploads/%s/%i_%i_%s' % (
+            slugify(self.work.name),
+            self.start_index,
+            self.end_index,
+            filename
+        )
+
+    work = ForeignKey(TextWork)
+    start_index = IntegerField()
+    end_index = IntegerField()
     audio_file = FileField(
         storage=file_storage,
         upload_to=audio_filename,

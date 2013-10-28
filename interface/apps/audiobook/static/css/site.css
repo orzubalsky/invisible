@@ -20,7 +20,8 @@ body {
 }
 #book {
 	float:right;
-	opacity:0;
+	opacity:1;
+	color: white;
 }
 #sounds {
 	padding:0;
