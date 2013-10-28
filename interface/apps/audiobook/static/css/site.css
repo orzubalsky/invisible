@@ -21,7 +21,10 @@ body {
 #book {
 	float:right;
 	opacity:1;
-	color: white;
+	color: black;
+}
+#book .uploaded {
+	background-color: yellow;
 }
 #sounds {
 	padding:0;

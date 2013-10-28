@@ -1,5 +1,7 @@
 {% extends request.is_ajax|yesno:"base_ajax.html,base.html" %}
 
+{% load render_text %}
+
 {% block content %}
 
 <div id="upload_bg">
@@ -27,7 +29,7 @@
 <div id="jquery_jplayer_1" class="jp-jplayer"></div>
 
 <div id="book">
-    {{ work.text|safe }}
+    {% render_text work %}
 </div>
 
 {% endblock content %}

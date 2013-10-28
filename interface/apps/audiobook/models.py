@@ -162,7 +162,7 @@ class TextWorkSubmission(Base):
     A submission for a single page in the work.
     """
     class Meta:
-        ordering = ['start_index']
+        ordering = ['-start_index']
 
     def audio_filename(self, filename):
         return 'uploads/%s/%i_%i_%s' % (
@@ -181,4 +181,4 @@ class TextWorkSubmission(Base):
     )
 
     def __unicode__(self):
-        return "audio for %s" % (self.page)
+        return "audio for %s" % (self.work)
