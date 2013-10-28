@@ -20,6 +20,7 @@ body {
 }
 #book {
 	float:right;
+	opacity:0;
 }
 #sounds {
 	padding:0;
@@ -64,14 +65,14 @@ body {
 
 /*jplayer yo*/
 div#jquery_jplayer_1 {
-	
+
 }
 div.jp-audio, div.jp-audio-stream, div.jp-video {
 
     border: 0;
 }
 div#jp_container_1.jp-audio {
-
+	opacity:0;
     height: 50px;
     width: 780px;
 }

@@ -24,6 +24,17 @@
 		};	
 		
 		
+		$( "div#jp_container_1.jp-audio" ).mouseOver(function() {
+			$( this ).fadeIn( "slow", function() {
+			// Animation complete
+			});
+		});
+		$( "#book" ).mouseOver(function() {
+			$( this ).fadeIn( "slow", function() {
+			// Animation complete
+			});
+		});
+		
 	    /*
 	     *  Store csrv token in the javascript site scope.
 	     *  This will be used in ajax form submissions.
