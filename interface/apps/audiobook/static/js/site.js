@@ -20,20 +20,48 @@
 		    this.displayPageNumber();
             this.pageInteraction();	 
             this.formInteraction();  
+			this.invisibilityShield();
             //this.HandleUploadForm(); 
+			
+			
 		};	
 		
 		
-		$( "div#jp_container_1.jp-audio" ).mouseOver(function() {
-			$( this ).fadeIn( "slow", function() {
-			// Animation complete
-			});
-		});
-		$( "#book" ).mouseOver(function() {
-			$( this ).fadeIn( "slow", function() {
-			// Animation complete
-			});
-		});
+		/*	Invisibility shield- this makes everything invisible until you 
+			mouseover it.
+		*/
+		this.invisibilityShield = function()
+		{
+				$( "div#jp_container_1.jp-audio" ).mouseover(function() {
+					 $( this ).animate({
+						opacity: 1,
+						}, 500, function() {
+						// Animation complete.
+					});
+				});
+				$( "#book" ).mouseover(function() {
+					$( this ).animate({
+						opacity: 1,
+						}, 3000, function() {
+						// Animation complete.
+					});
+				});
+				
+					$( "div#jp_container_1.jp-audio" ).mouseout(function() {
+						 $( this ).animate({
+							opacity: 0,
+							}, 500, function() {
+							// Animation complete.
+						});
+					});
+					$( "#book" ).mouseout(function() {
+						$( this ).animate({
+							opacity: 0,
+							}, 3000, function() {
+							// Animation complete.
+						});
+					});
+		}
 		
 	    /*
 	     *  Store csrv token in the javascript site scope.
