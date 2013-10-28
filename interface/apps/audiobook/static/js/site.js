@@ -32,36 +32,19 @@
 		*/
 		this.invisibilityShield = function()
 		{
-				$( "div#jp_container_1.jp-audio" ).mouseover(function() {
-					 $( this ).animate({
-						opacity: 1,
-						}, 500, function() {
-						// Animation complete.
-					});
-				});
-				$( "#book" ).mouseover(function() {
-					$( this ).animate({
-						opacity: 1,
-						}, 3000, function() {
-						// Animation complete.
-					});
-				});
-				
-					$( "div#jp_container_1.jp-audio" ).mouseout(function() {
-						 $( this ).animate({
-							opacity: 0,
-							}, 500, function() {
-							// Animation complete.
-						});
-					});
-					$( "#book" ).mouseout(function() {
-						$( this ).animate({
-							opacity: 0,
-							}, 3000, function() {
-							// Animation complete.
-						});
-					});
-		}
+			$( "div#jp_container_1.jp-audio" ).animate({
+				opacity: 1,
+				}, 500, function() {
+				// Animation complete.
+			});
+			
+			$( "#book" ).animate({
+				opacity: 1,
+				}, 5000, function() {
+				// Animation complete.
+			});
+
+		};
 		
 	    /*
 	     *  Store csrv token in the javascript site scope.
@@ -119,10 +102,20 @@
 				var page_number = lib.getId(id_string);
 				$('#page span').text(page_number);
 				$("#page").show();
+				$( "#sounds a" ).animate({
+					opacity:1
+					}, 100, function() {
+					// Animation complete.
+				});
 			});
 			$("#sounds a").mouseleave(function()
 			{
 				$("#page").hide();
+				$( "#sounds a" ).animate({
+					opacity:0
+					}, 100, function() {
+					// Animation complete.
+				});
 			});
 			
 			var mouseX;

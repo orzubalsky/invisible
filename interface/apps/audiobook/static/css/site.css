@@ -47,10 +47,11 @@ body {
 	background:#333;
 }
 #sounds a.empty {
-	background: white;
+	background: #FFF;
 }
 #sounds a.empty:hover {
-	background: red;
+
+
 }
 #sounds a.playing {
 	background: black;
