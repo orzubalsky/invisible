@@ -21,7 +21,7 @@
             //this.pageInteraction();
             this.textInteraction(); 
             this.formInteraction();  
-			// this.invisibilityShield();
+			this.invisibilityShield();
             //this.HandleUploadForm(); 
 			
 			
@@ -33,16 +33,15 @@
 		*/
 		this.invisibilityShield = function()
 		{
-			$( "div#jp_container_1.jp-audio" ).animate({
-				opacity: 1,
-				}, 500, function() {
-				// Animation complete.
+			$("#menu #info").click(function()
+			{
+				$( "#about" ).fadeIn("fast");
 			});
 			
-			$( "#book" ).animate({
-				opacity: 1,
-				}, 5000, function() {
-				// Animation complete.
+			
+			$("#about #close").click(function()
+			{
+				$( "#about" ).fadeOut("fast");
 			});
 
 		};
