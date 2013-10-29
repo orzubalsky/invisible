@@ -174,12 +174,32 @@ a.jp-play, a.jp-pause {
 	color: white; 
 }
 #close {
-	background:url("tiny_close.png") no-repeat;
+	background:url("small_close.png") no-repeat;
 	float:right;
-	margin:15px 15px;
-	width:5px;
-	height:5px;
+	margin:13px 13px;
+	width:13px;
+	height:13px;
 }
 #close:hover {
 	cursor:pointer;
+}
+#menu {
+	position:absolute;
+	top:-30px;
+	left:-100px;
+}
+#menu a {
+	display:block;
+	float:left;
+	width:20px;
+	height:20px;
+}
+#menu a#upload {
+	background:url("icons.png") -8px -8px;
+}
+#menu a#play {
+	background:url("icons.png") -28px -8px;
+}
+#menu a#info {
+	background:url("icons.png") -48px -8px;
 }
