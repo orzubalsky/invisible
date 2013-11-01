@@ -33,7 +33,8 @@ body {
 	color:#efefef;
 }
 #book .playing {
-	text-decoration: underline;
+	background:#bdbdbd;
+	color:#bdbdbd;
 }
 #book .highlighted {
 	background-color: #999;

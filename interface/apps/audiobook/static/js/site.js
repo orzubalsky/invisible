@@ -70,8 +70,11 @@
 			{
 				e.preventDefault();
 
-				var element = self.getNextPlayableAudio();
-				console.log(element);
+				var $element = self.getNextPlayableAudio();
+
+				var audio_file = $element.attr('id');
+
+				self.loadAudio(audio_file, $element);
 			});
 
 		};
@@ -90,9 +93,9 @@
 				
  		        if ($(this).hasClass('uploaded'))
  		        {
- 		        	var audio_file = $(this).attr('id');
+ 		        	// var audio_file = $(this).attr('id');
 
- 		        	self.loadAudio(audio_file, this);
+ 		        	// self.loadAudio(audio_file, this);
  		        }
  		        
  		        if ($(this).hasClass('selected'))
@@ -428,13 +431,11 @@
 
 			$("#jquery_jplayer_1").bind($.jPlayer.event.ended, function(event)
 			{
-  				// var next_element = self.getNextPlayableAudio();
+  				var $next_element = self.getNextPlayableAudio();
 
- 	        	// var page_number = lib.getId($(next_element).attr('id'));
-				// self.loadGoogleBookPage(page_number);
-
-				// var audio_file = $('span', next_element).attr('id');
-				// self.loadAudio(page_number, audio_file, next_element);
+				var audio_file = $next_element.attr('id');
+				
+				self.loadAudio(audio_file, $next_element);
 			});			
 		};
 
