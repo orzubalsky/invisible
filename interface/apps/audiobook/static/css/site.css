@@ -28,7 +28,9 @@ body {
 	color: white;
 }
 #book .uploaded {
-	text-decoration: line-through;
+	/*text-decoration: line-through;*/
+	background:#efefef;
+	color:#efefef;
 }
 #book .playing {
 	text-decoration: underline;
