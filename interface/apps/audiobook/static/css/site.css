@@ -22,7 +22,7 @@ body {
 #book {
 	float:right;
 	opacity:1;
-	color: white;
+	color: black;
 }
 #book .uploaded {
 	/*text-decoration: line-through;*/
@@ -35,6 +35,9 @@ body {
 }
 #book .highlighted {
 	background-color: #999;
+}
+#book .hover {
+	background-color: yellow;
 }
 #sounds {
 	padding:0;

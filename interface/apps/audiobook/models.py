@@ -3,8 +3,10 @@ from django.db.models.query import QuerySet
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.core.files.storage import FileSystemStorage
+from django.core.files import File
 from django.conf import settings
 from django.template.defaultfilters import slugify
+from tinymce.models import HTMLField
 
 
 # set upload directory to use the UPLOAD_ROOT set in settings
@@ -182,3 +184,94 @@ class TextWorkSubmission(Base):
 
     def __unicode__(self):
         return "audio for %s" % (self.work)
+
+
+class TextChunkWork(Work):
+    """
+    """
+    def text_filename(self, filename):
+        return 'uploads/%s/text_%s' % (
+            slugify(self.name),
+            filename
+        )
+
+    text_file = FileField(
+        storage=file_storage,
+        upload_to=text_filename,
+    )
+
+    def save(self, *args, **kwargs):
+        """Create Chunk objects if saved for the first time."""
+        created = False
+        if self.pk is None:
+            created = True
+
+        super(TextChunkWork, self).save(*args, **kwargs)
+
+        if created is True:
+            f = open(self.text_file.path, 'r')
+            myfile = File(f)
+
+            text = ''
+
+            for i, line in enumerate(myfile):
+                if i % 20 is 0:
+                    chunk = Chunk(work=self, text=text, number=i)
+                    chunk.save()
+                    text = ''
+                else:
+                    text += line
+
+
+class ChunkQuerySet(QuerySet):
+    def public(self):
+        return self.filter(is_active=True)
+
+
+class ChunkManager(Manager):
+    def get_query_set(self):
+        return ChunkQuerySet(self.model, using=self._db).select_related(
+            'chunksubmission',
+        )
+
+
+class Chunk(Base):
+    """
+    """
+    class Meta:
+        ordering = ['work', 'number']
+
+    work = ForeignKey(TextChunkWork)
+    number = IntegerField(verbose_name=_("Chunk Number"))
+    text = HTMLField(verbose_name=_("Text"), blank=False, null=False)
+
+    objects = ChunkManager()
+
+    def __unicode__(self):
+        return "chunk %i in %s" % (self.number, self.work)
+
+
+class ChunkSubmission(Base):
+    """
+    A submission for a single text chunk in the work.
+    """
+    class Meta:
+        ordering = ['chunk']
+
+    def audio_filename(self, filename):
+        return 'uploads/%s/page_%i_%s' % (
+            slugify(self.chunk.work.name),
+            self.chunk.number,
+            filename
+        )
+
+    chunk = OneToOneField(Chunk)
+    audio_file = FileField(
+        storage=file_storage,
+        upload_to=audio_filename,
+    )
+
+    def __unicode__(self):
+        return "audio for %s" % (self.chunk)
+
+

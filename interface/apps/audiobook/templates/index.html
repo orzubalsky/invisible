@@ -46,7 +46,9 @@
 	<p><b>Contribute</b> <ul><li>Find text that has not yet been recorded by selecting the text (if text is crossed out, then it has already been recorded).</li> <li>Record the text on an iphone, portable recorder, or straight into your computer.</li> <li>Click <i>upload</i> and follow the instructions.</li></ul>
 </div>
 <div id="book">
-    {% render_text work %}
+    {% for chunk in work.chunk_set.all %}
+        <div class="chunk">{{ chunk.text|linebreaks }}</div>
+    {% endfor %}
 </div>
 
 {% endblock content %}

@@ -2,20 +2,32 @@ from audiobook.models import *
 from django.contrib import admin
 
 
-class TextWorkSubmissionInline(admin.TabularInline):
-    model = TextWorkSubmission
+class ChunkSubmissionInline(admin.TabularInline):
+    model = ChunkSubmission
     extra = 2
-    fields = ['work', 'start_index', 'end_index', 'audio_file']
+    fields = ['chunk', 'audio_file']
 
 
-class TextWorkSubmissionAdmin(admin.ModelAdmin):
-    fields = ['work', 'start_index', 'end_index', 'audio_file', 'is_active']
+class ChunkInline(admin.TabularInline):
+    model = Chunk
+    extra = 2
+    fields = ['number', 'text']
 
 
-class TextWorkAdmin(admin.ModelAdmin):
-    inlines = [TextWorkSubmissionInline]
-    list_display = ('name', 'text')
+class ChunkSubmissionAdmin(admin.ModelAdmin):
+    fields = ['chunk', 'audio_file', 'is_active']
 
 
-admin.site.register(TextWork, TextWorkAdmin)
-admin.site.register(TextWorkSubmission, TextWorkSubmissionAdmin)
+class ChunkAdmin(admin.ModelAdmin):
+    inlines = [ChunkSubmissionInline]
+    fields = ['work', 'number', 'text']
+
+
+class TextChunkWorkAdmin(admin.ModelAdmin):
+    inlines = [ChunkInline]
+    list_display = ('name', 'text_file')
+
+
+admin.site.register(TextChunkWork, TextChunkWorkAdmin)
+admin.site.register(ChunkSubmission, ChunkSubmissionAdmin)
+admin.site.register(Chunk, ChunkAdmin)

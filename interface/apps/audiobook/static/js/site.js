@@ -21,7 +21,7 @@
 		    //this.displayPageNumber();
             //this.pageInteraction();
           
-            this.textInteraction(); 
+            this.chunkInteraction(); 
             this.formInteraction();  
 			this.menuInteraction();
           
@@ -92,32 +92,14 @@
 				$('#play').show()
 			});
 
-		};
+			$('#menu #upload').click(function(e)
+			{
+				e.preventDefault();
 
+ 		        // display upload form
+ 		        $('#upload_bg').fadeIn(300);
 
-	    /*
-	     *  Binds events to play submissions when text is clicked on
-	     */		
-		this.textInteraction = function()
-		{
-			var self = this;
-
- 		    $('#book > span').live('click', function(e) 
- 		    {
- 		        e.preventDefault();
-				
- 		        if ($(this).hasClass('uploaded'))
- 		        {
- 		        	// var audio_file = $(this).attr('id');
-
- 		        	// self.loadAudio(audio_file, this);
- 		        }
- 		        
- 		        if ($(this).hasClass('selected'))
- 		        {
- 		        	//
- 		        }
-      		});
+			});
 
  		    // update file label with selected filename 
  		    // when a file is selected
@@ -127,6 +109,37 @@
 				$('#default_text').text(filename);
 			});
 			
+
+
+		};
+
+
+	    /*
+	     */		
+		this.chunkInteraction = function()
+		{
+			var self = this;
+
+			$('#book .chunk').mouseover(function(e)
+			{
+				$(this).addClass('hover');
+			});
+			$('#book .chunk').mouseleave(function(e)
+			{
+				$(this).removeClass('hover');
+			});			
+		};
+
+
+
+
+	    /*
+	     *  Binds events to play submissions when text is clicked on
+	     */		
+		this.textInteraction = function()
+		{
+			var self = this;
+
 			$('#book').live('click', function(e)
 			{
 				if (!$(e.target).hasClass('uploaded'))
@@ -136,11 +149,7 @@
 
 					var text = self.selectText();
 				}
-
 			});
-				
-
-
 		};
 
 

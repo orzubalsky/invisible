@@ -7,6 +7,26 @@ from audiobook.models import *
 from audiobook.forms import *
 
 
+def textchunkwork(request):
+    """
+    """
+    work = get_object_or_404(TextChunkWork, name='invisible man')
+
+    if request.method == 'POST':
+        form = TextWorkSubmissionForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/')
+    else:
+        form = TextWorkSubmissionForm()
+
+    return render_to_response('index.html', {
+        'work': work,
+        'form': form,
+    }, context_instance=RequestContext(request))
+
+
 def textwork(request):
     """
     """
