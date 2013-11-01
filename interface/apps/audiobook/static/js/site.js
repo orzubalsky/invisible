@@ -37,7 +37,7 @@
 		this.menuInteraction = function()
 		{
 			var self = this;
-			
+
 			// the menu should be hidden on pageload
 			// a click on any element should make it visible
 			$(document).click(function(e)
@@ -68,6 +68,8 @@
 
 			$('#play').click(function(e)
 			{
+				e.preventDefault();
+
 				var element = self.getNextPlayableAudio();
 				console.log(element);
 			});
@@ -112,9 +114,9 @@
 				if (!$(e.target).hasClass('uploaded'))
 				{
 					$('.highlighted').contents().unwrap();
+					$('.highlighted').remove();
 
 					var text = self.selectText();
-					console.log(text);
 				}
 
 			});
@@ -265,7 +267,15 @@
 
 			var index = $(currently_playing).index();
 
-			var next_elements = $('#book a:gt('+index+')');
+			if (index < 0)
+			{
+				var next_elements = $('#book span');
+			}
+			else
+			{
+				var next_elements = $('#book span:gt('+index+')');				
+			}
+
 			var next_element = $(next_elements).filter('.uploaded').first();
 
 			return next_element;
