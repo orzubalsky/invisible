@@ -19,16 +19,22 @@ body {
 	width:240px;
 	float:left;
 }
+#menu {
+	display: none;
+}
 #book {
 	float:right;
 	opacity:1;
-	color: black;
+	color: white;
 }
 #book .uploaded {
-	background-color: yellow;
+	text-decoration: line-through;
 }
 #book .playing {
-	background-color: red;
+	text-decoration: underline;
+}
+#book .highlighted {
+	background-color: #999;
 }
 #sounds {
 	padding:0;

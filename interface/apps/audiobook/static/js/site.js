@@ -17,11 +17,14 @@
 		{		
 		    this.storeCsrvToken();
 		    this.initializePlayer();
+		   
 		    //this.displayPageNumber();
             //this.pageInteraction();
+          
             this.textInteraction(); 
             this.formInteraction();  
-			this.invisibilityShield();
+			this.menuInteraction();
+          
             //this.HandleUploadForm(); 
 			
 			
@@ -31,64 +34,45 @@
 		/*	Invisibility shield- this makes everything invisible until you 
 			mouseover it.
 		*/
-		this.invisibilityShield = function()
+		this.menuInteraction = function()
 		{
-			$("#menu #info").click(function()
+			var self = this;
+			
+			// the menu should be hidden on pageload
+			// a click on any element should make it visible
+			$(document).click(function(e)
 			{
+				if (!$('#menu').is(":visible"))
+				{
+					$('#menu').show();	
+				}
+				
+			});
+
+			// clicking on info displays the about page
+			$("#menu #info").click(function(e)
+			{
+				e.preventDefault();
+
 				$( "#about" ).fadeIn("fast");
 			});
 			
-			
-			$("#about #close").click(function()
+			// clickon on close hide the about page
+			$("#about #close").click(function(e)
 			{
+				e.preventDefault();
+
 				$( "#about" ).fadeOut("fast");
 			});
 
-		};
-		
-	    /*
-	     *  Store csrv token in the javascript site scope.
-	     *  This will be used in ajax form submissions.
-	     */		
-		this.storeCsrvToken = function() 
-		{
-            this.csrvToken = $('input[name="csrfmiddlewaretoken"]').val();
-		};
-		
 
-	    /*
-	     *  Create an instance of jPlayer with no media.
-	     */		
-		this.initializePlayer = function()
-		{
-			var self = this;
-
-			// $('.jp-controls').hide();
-
-			$("#jquery_jplayer_1").jPlayer({
-				ready: function(event){},
-		        swfPath: STATIC_URL + "js",
-				supplied: "mp3",
-				wmode: "window"
+			$('#play').click(function(e)
+			{
+				var element = self.getNextPlayableAudio();
+				console.log(element);
 			});
 
-			// $("#jquery_jplayer_1").bind($.jPlayer.event.ready, function(event)
-			// {
-			// 	$('.jp-controls').fadeIn(200);
-			// });		
-
-			$("#jquery_jplayer_1").bind($.jPlayer.event.ended, function(event)
-			{
-  				// var next_element = self.getNextPlayableAudio();
-
- 	        	// var page_number = lib.getId($(next_element).attr('id'));
-				// self.loadGoogleBookPage(page_number);
-
-				// var audio_file = $('span', next_element).attr('id');
-				// self.loadAudio(page_number, audio_file, next_element);
-			});			
 		};
-
 
 
 	    /*
@@ -112,7 +96,7 @@
  		        if ($(this).hasClass('selected'))
  		        {
  		        	//
- 		        }	    
+ 		        }
       		});
 
  		    // update file label with selected filename 
@@ -122,6 +106,21 @@
 				var filename = $(this).val().split('\\').pop();
 				$('#default_text').text(filename);
 			});
+			
+			$('#book').live('click', function(e)
+			{
+				if (!$(e.target).hasClass('uploaded'))
+				{
+					$('.highlighted').contents().unwrap();
+
+					var text = self.selectText();
+					console.log(text);
+				}
+
+			});
+				
+
+
 		};
 
 
@@ -262,11 +261,11 @@
  		{
  			var self = this;
 
-			var currently_playing = $('#sounds a.playing');
+			var currently_playing = $('#book .playing');
 
 			var index = $(currently_playing).index();
 
-			var next_elements = $('#sounds a:gt('+index+')');
+			var next_elements = $('#book a:gt('+index+')');
 			var next_element = $(next_elements).filter('.uploaded').first();
 
 			return next_element;
@@ -338,6 +337,95 @@
 
             	$.data(this, 'submitted', true); // mark form as submitted.
         	});
+		};
+
+ 		
+		this.selectText = function()
+		{
+			var selection;
+
+			try
+			{
+				if (window.ActiveXObject)
+				{
+					var c = document.selection.createRange();
+					return c.htmlText;
+				}
+
+				var nNd = document.createElement("span");
+				
+				nNd.className = "highlighted";
+
+				selection = getSelection();
+				
+				var w = selection.getRangeAt(0);
+				
+				w.surroundContents(nNd);
+
+				selection.removeAllRanges();
+				
+				return nNd.innerHTML;
+			}
+			catch (e) 
+			{
+				if (window.ActiveXObject)
+				{
+					return document.selection.createRange();
+				}
+				else 
+				{
+					selection = getSelection();
+					
+					selection.removeAllRanges();
+
+					return selection;
+				}
+			};
+		};
+
+
+
+ 		/*
+	     *  Store csrv token in the javascript site scope.
+	     *  This will be used in ajax form submissions.
+	     */		
+		this.storeCsrvToken = function() 
+		{
+            this.csrvToken = $('input[name="csrfmiddlewaretoken"]').val();
+		};
+		
+
+	    /*
+	     *  Create an instance of jPlayer with no media.
+	     */		
+		this.initializePlayer = function()
+		{
+			var self = this;
+
+			// $('.jp-controls').hide();
+
+			$("#jquery_jplayer_1").jPlayer({
+				ready: function(event){},
+		        swfPath: STATIC_URL + "js",
+				supplied: "mp3",
+				wmode: "window"
+			});
+
+			// $("#jquery_jplayer_1").bind($.jPlayer.event.ready, function(event)
+			// {
+			// 	$('.jp-controls').fadeIn(200);
+			// });		
+
+			$("#jquery_jplayer_1").bind($.jPlayer.event.ended, function(event)
+			{
+  				// var next_element = self.getNextPlayableAudio();
+
+ 	        	// var page_number = lib.getId($(next_element).attr('id'));
+				// self.loadGoogleBookPage(page_number);
+
+				// var audio_file = $('span', next_element).attr('id');
+				// self.loadAudio(page_number, audio_file, next_element);
+			});			
 		};
 
 
