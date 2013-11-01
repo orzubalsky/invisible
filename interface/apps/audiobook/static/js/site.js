@@ -75,6 +75,21 @@
 				var audio_file = $element.attr('id');
 
 				self.loadAudio(audio_file, $element);
+
+				$('#play').hide()
+				$('#pause').show();
+			});
+
+			$('#pause').click(function(e)
+			{
+				e.preventDefault();
+
+				$('#book span').removeClass('playing');
+
+				$("#jquery_jplayer_1").jPlayer("pause");
+
+				$('#pause').hide();
+				$('#play').show()
 			});
 
 		};

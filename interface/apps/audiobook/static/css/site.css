@@ -19,9 +19,6 @@ body {
 	width:240px;
 	float:left;
 }
-#menu {
-	display: none;
-}
 #book {
 	float:right;
 	opacity:1;
@@ -231,5 +228,8 @@ a.jp-play, a.jp-pause {
 }
 #about #close {
 	margin:0;
+}
+#menu a#pause {
+	display: none;
 }
 
