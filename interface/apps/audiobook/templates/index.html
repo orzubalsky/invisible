@@ -5,7 +5,7 @@
 {% block content %}
 
 <div id="upload_bg">
-	<div id="default_text">Choose file for page</div>
+	<div id="default_text">Choose file for text</div>
 	<div id="close"><a href="" /></a></div>
 	<div id="upload_form" >
        <form id="upload" name="sound_upload" action="." enctype="multipart/form-data" method="POST">{% csrf_token %}
@@ -18,8 +18,7 @@
             {% endif %}
             
             {{ form.audio_file }}
-            {{ form.start_index }}
-            {{ form.end_index }}
+            {{ form.chunk }}
             
             <br/><br/>
             <input id="file_submit" type="submit" value="Upload">
@@ -47,7 +46,11 @@
 </div>
 <div id="book">
     {% for chunk in work.chunk_set.all %}
-        <div class="chunk">{{ chunk.text|linebreaks }}</div>
+        {% if chunk.chunksubmission.audio_file %}
+        <div id="{{ STATIC_URL }}{{ chunk.chunksubmission.audio_file.name }}" class="uploaded">{{ chunk.text|linebreaks }}</div>
+        {% else %}
+        <div id="chunk_{{ chunk.id }}">{{ chunk.text|linebreaks }}</div>
+        {% endif %}    
     {% endfor %}
 </div>
 

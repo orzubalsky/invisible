@@ -22,7 +22,10 @@ body {
 #book {
 	float:right;
 	opacity:1;
-	color: black;
+	color: white;
+}
+#book > div {
+	border: 1px dotted transparent;
 }
 #book .uploaded {
 	/*text-decoration: line-through;*/
@@ -37,7 +40,10 @@ body {
 	background-color: #999;
 }
 #book .hover {
-	background-color: yellow;
+	border: 1px dotted #bdbdbd;
+}
+#book .uploaded.hover {
+	border: 1px dotted transparent;
 }
 #sounds {
 	padding:0;
@@ -154,7 +160,7 @@ a.jp-play, a.jp-pause {
 	opacity:0;
 	padding-top:20px;
 }
-#upload_form #id_page {
+#upload_form #id_chunk {
 	display: none;
 }
 #upload_bg {

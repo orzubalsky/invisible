@@ -46,7 +46,6 @@
 				{
 					$('#menu').show();	
 				}
-				
 			});
 
 			// clicking on info displays the about page
@@ -54,7 +53,7 @@
 			{
 				e.preventDefault();
 
-				$( "#about" ).fadeIn("fast");
+				$("#about").fadeIn("fast");
 			});
 			
 			// clickon on close hide the about page
@@ -62,7 +61,7 @@
 			{
 				e.preventDefault();
 
-				$( "#about" ).fadeOut("fast");
+				$("#about").fadeOut("fast");
 			});
 
 
@@ -84,7 +83,7 @@
 			{
 				e.preventDefault();
 
-				$('#book span').removeClass('playing');
+				$('#book > div').removeClass('playing');
 
 				$("#jquery_jplayer_1").jPlayer("pause");
 
@@ -120,14 +119,35 @@
 		{
 			var self = this;
 
-			$('#book .chunk').mouseover(function(e)
+			$('#book > div').mouseover(function(e)
 			{
 				$(this).addClass('hover');
 			});
-			$('#book .chunk').mouseleave(function(e)
+			$('#book > div').mouseleave(function(e)
 			{
 				$(this).removeClass('hover');
 			});			
+ 		    $('#book > div').click(function(e) 
+ 		    {
+ 		        e.preventDefault();
+
+ 	        	var chunk_number = lib.getId($(this).attr('id')); 		        
+				
+ 		        if ($(this).hasClass('uploaded'))
+ 		        {
+ 		        	// var audio_file = $(this).attr('id');
+ 		        	// self.loadAudio(audio_file, this);
+ 		        }
+ 		        else
+ 		        {
+ 		        	// update page field
+ 		        	$('select#id_chunk').val(chunk_number);
+
+ 		        	// display upload form
+ 		        	$('#upload_bg').fadeIn(300);
+ 		        }	    
+      		});
+
 		};
 
 
@@ -275,7 +295,7 @@
 			});
 			$("#jquery_jplayer_1").jPlayer("play");
 
-			$('#book span').removeClass('playing');
+			$('#book > div').removeClass('playing');
 			$(element).addClass('playing');
  		};
 
@@ -296,14 +316,16 @@
 
 			if (index < 0)
 			{
-				var next_elements = $('#book span');
+				var next_elements = $('#book div');
 			}
 			else
 			{
-				var next_elements = $('#book span:gt('+index+')');				
+				var next_elements = $('#book div:gt('+index+')');				
 			}
 
 			var next_element = $(next_elements).filter('.uploaded').first();
+
+			console.log(next_element);
 
 			return next_element;
  		};

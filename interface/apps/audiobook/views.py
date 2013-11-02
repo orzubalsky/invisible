@@ -13,13 +13,13 @@ def textchunkwork(request):
     work = get_object_or_404(TextChunkWork, name='invisible man')
 
     if request.method == 'POST':
-        form = TextWorkSubmissionForm(request.POST, request.FILES)
+        form = ChunkSubmissionForm(request.POST, request.FILES)
 
         if form.is_valid():
             form.save()
             return HttpResponseRedirect('/')
     else:
-        form = TextWorkSubmissionForm()
+        form = ChunkSubmissionForm()
 
     return render_to_response('index.html', {
         'work': work,
