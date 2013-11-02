@@ -24,7 +24,7 @@
             this.chunkInteraction(); 
             this.formInteraction();  
 			this.menuInteraction();
-          
+          	this.scrollInteraction();
             //this.HandleUploadForm(); 
 			
 			
@@ -77,16 +77,9 @@
 			{
 				e.preventDefault();
 
-				self.resetUploadingMode();
-				
 				var $element = self.getNextPlayableAudio();
 
-				var audio_file = $element.attr('id');
-
-				self.loadAudio(audio_file, $element);
-
-				$('#play').hide()
-				$('#pause').show();
+				self.playElement($element);
 			});
 
 			$('#pause').click(function(e)
@@ -190,8 +183,77 @@
 		};
 
 
+		this.scrollInteraction = function()
+		{
+			var self = this;
+
+			$(document).on("scroll", function(e)
+			{
+				if ($('body').hasClass('playing'))
+				{
+					var scrollTop = $(document).scrollTop();
+	        		
+					var $uploadedElements = $('#book .uploaded');
+
+					for(var i=0; i<$uploadedElements.size(); i++)
+					{
+						var $element = $uploadedElements.eq(i);
+
+						var elementTop = $element.position().top;
+
+						if(elementTop > scrollTop)
+						{
+							console.log($element);
+
+							self.playElement($element);
+
+							return;
+						}
+					}
+				}
+    		});
+		};
+
+
+		this.playElement = function($element)
+		{
+			var self = this;
+
+			self.resetUploadingMode();
+
+			$('body').addClass('playing');
+
+			var audio_file = $element.attr('id');
+
+			self.loadAudio(audio_file, $element);
+
+			$('#play').hide()
+			$('#pause').show();			
+		};
+
+
+ 		/*
+ 		 *	Play audio file and load page in google book
+ 		 */	
+ 		this.loadAudio = function(audio_file, element)
+ 		{
+ 			var self = this;
+
+ 			// play audio file
+			$("#jquery_jplayer_1").jPlayer("setMedia", {
+				mp3: audio_file,
+			});
+			$("#jquery_jplayer_1").jPlayer("play");
+
+			$('#book > div').removeClass('playing');
+			$(element).addClass('playing');
+ 		};
+
+
 		this.pausePlayer = function()
-		{			
+		{
+			$('body').removeClass('playing');			
+
 			$('#book > div').removeClass('playing');
 
 			$("#jquery_jplayer_1").jPlayer("pause");
@@ -315,24 +377,6 @@
  			{
  				$('#upload_bg').fadeOut(100);
 			});
- 		};
-
-
- 		/*
- 		 *	Play audio file and load page in google book
- 		 */	
- 		this.loadAudio = function(audio_file, element)
- 		{
- 			var self = this;
-
- 			// play audio file
-			$("#jquery_jplayer_1").jPlayer("setMedia", {
-				mp3: audio_file,
-			});
-			$("#jquery_jplayer_1").jPlayer("play");
-
-			$('#book > div').removeClass('playing');
-			$(element).addClass('playing');
  		};
 
 
