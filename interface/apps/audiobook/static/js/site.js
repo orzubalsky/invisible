@@ -48,6 +48,15 @@
 				}
 			});
 
+			$('body.uploading').live('click', function(e)
+			{
+				if( e.target !== this ) 
+				{
+       				return;
+       			}
+       			self.resetUploadingMode();
+			});
+
 			// clicking on info displays the about page
 			$("#menu #info").click(function(e)
 			{
@@ -64,11 +73,12 @@
 				$("#about").fadeOut("fast");
 			});
 
-
 			$('#play').click(function(e)
 			{
 				e.preventDefault();
 
+				self.resetUploadingMode();
+				
 				var $element = self.getNextPlayableAudio();
 
 				var audio_file = $element.attr('id');
@@ -83,20 +93,16 @@
 			{
 				e.preventDefault();
 
-				$('#book > div').removeClass('playing');
-
-				$("#jquery_jplayer_1").jPlayer("pause");
-
-				$('#pause').hide();
-				$('#play').show()
+				self.pausePlayer();
 			});
 
 			$('#menu #upload').click(function(e)
 			{
 				e.preventDefault();
 
- 		        // display upload form
- 		        $('#upload_bg').fadeIn(300);
+				self.pausePlayer();
+
+ 		        $('body').addClass('uploading');
 
 			});
 
@@ -119,20 +125,24 @@
 		{
 			var self = this;
 
-			$('#book > div').mouseover(function(e)
+			$('.uploading #book > div').live('mouseover', function(e)
 			{
 				$(this).addClass('hover');
 			});
-			$('#book > div').mouseleave(function(e)
+			$('.uploading #book > div').live('mouseleave', function(e)
 			{
 				$(this).removeClass('hover');
 			});			
- 		    $('#book > div').click(function(e) 
+ 		    $('.uploading #book > div').live('click', function(e) 
  		    {
  		        e.preventDefault();
 
  	        	var chunk_number = lib.getId($(this).attr('id')); 		        
 				
+				var top_offset = $(this).position().top;
+
+				$('#book > div').removeClass('selected');
+
  		        if ($(this).hasClass('uploaded'))
  		        {
  		        	// var audio_file = $(this).attr('id');
@@ -140,8 +150,15 @@
  		        }
  		        else
  		        {
+ 		        	$(this).addClass('selected');
+
  		        	// update page field
  		        	$('select#id_chunk').val(chunk_number);
+
+ 		        	// re-position upload form next to the selected chunk
+ 		        	$('#upload_bg').css({
+ 		        		'top' : top_offset + 'px',
+ 		        	});
 
  		        	// display upload form
  		        	$('#upload_bg').fadeIn(300);
@@ -173,6 +190,25 @@
 		};
 
 
+		this.pausePlayer = function()
+		{			
+			$('#book > div').removeClass('playing');
+
+			$("#jquery_jplayer_1").jPlayer("pause");
+
+			$('#pause').hide();
+			$('#play').show()
+		};
+
+
+		this.resetUploadingMode = function()
+		{			
+			$('body').removeClass('uploading');
+
+			$('#upload_bg').hide();
+
+			$('#book > div').removeClass('hover').removeClass('selected');
+		};
 
 	    /*
 	     *  Update the position and text of #page div depending
