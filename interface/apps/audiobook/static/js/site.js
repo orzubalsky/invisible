@@ -72,6 +72,15 @@
 
 				$("#about").fadeOut("fast");
 			});
+			
+			//click on close to hide contribute info
+			$("#contribute #close").click(function(e)
+			{
+				e.preventDefault();
+
+				$("#contribute").fadeOut("fast");
+			});
+		
 
 			$('#play').click(function(e)
 			{
@@ -96,6 +105,9 @@
 				self.pausePlayer();
 
  		        $('body').addClass('uploading');
+
+				$('#contribute').fadeIn();
+			
 
 			});
 
@@ -377,8 +389,9 @@
  			{
  				$('#upload_bg').fadeOut(100);
 			});
- 		};
+			
 
+ 		};
 
 
  		/*

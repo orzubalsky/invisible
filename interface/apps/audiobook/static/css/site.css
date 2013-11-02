@@ -191,7 +191,6 @@ a.jp-play, a.jp-pause {
 	color:#999;
 	position:absolute;
 	left:-221px;
-	border:1pt solid #EEE;
 	border-radius:5px;
 	background:white;
 	z-index:101;
@@ -278,4 +277,18 @@ a.jp-play, a.jp-pause {
 #errors {
 	width:180px;
 	margin-right:0px;
+}
+#contribute {
+	position:absolute;
+	width:200px;
+	background:white;
+	color:#333;
+	padding:20px;
+	border-radius:5px;
+	top:20px;
+	left:20px;
+	display:none;
+}
+#contribute #close {
+	margin: 0 0 10px;
 }
