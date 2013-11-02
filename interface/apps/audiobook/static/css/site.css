@@ -262,6 +262,7 @@ a.jp-play, a.jp-pause {
 	left: 0px;
 	border:1px solid #333;
 	padding:15px 20px;
+	color:#333;
 }
 #about #close {
 	margin:0;
