@@ -5,17 +5,11 @@
 {% block content %}
 
 <div id="upload_bg">
-	<div id="default_text">Choose file for text</div>
+	<div id="default_text">Choose audio file</div>
 	<div id="close"><a href="" /></a></div>
 	<div id="upload_form" >
        <form id="upload" name="sound_upload" action="." enctype="multipart/form-data" method="POST">{% csrf_token %}
-            {% if form.errors %}
-            <div id="errors">
-            {% for field in form %}
-                <p><strong>{{ field.errors }}</strong></p>
-            {% endfor %}                
-            </div>
-            {% endif %}
+           
             
             {{ form.audio_file }}
             {{ form.chunk }}
@@ -24,12 +18,20 @@
             <input id="file_submit" type="submit" value="Upload">
         </form>
 	</div>
+
+	 {% if form.errors %}
+        <div id="errors">
+        {% for field in form %}
+            <p><strong>{{ field.errors }}</strong></p>
+        {% endfor %}                
+        </div>
+        {% endif %}
 </div>
 <div id="jquery_jplayer_1" class="jp-jplayer"></div>
 <div id="menu">
-	<a id="upload" href="">Upload</a>
 	<a id="play" href="">Play</a>
     <a id="pause" href="">Pause</a>    
+	<a id="upload" href="">Contribute</a>
 	<a id="info" href="">Info</a>
 </div>
 <div id="about">

@@ -30,6 +30,10 @@ body.uploading {
 .uploading #book {
 	color: #eee;
 }
+#book  div {
+	padding-left:20px;
+	padding-right:20px;
+}
 #book .uploaded {
 	/*text-decoration: line-through;*/
 	background:white;
@@ -166,38 +170,45 @@ a.jp-play, a.jp-pause {
     width: 10px;
 }
 #upload_form {
-	width:135px;
-	padding:15px;
 	overflow:hidden;
 	position: relative;
+	padding: 0 15px 15px;
+    position: relative;
+    width: 135px;
 }
 #upload_form #id_audio_file {
 	opacity:0;
-	padding-top:20px;
+	position: relative;
+    top: 0px;
+    width: 170px;
+    z-index: 100;
 }
+
 #upload_form #id_chunk {
 	display: none;
 }
 #upload_bg {
+	color:#999;
 	position:absolute;
-	left:-250px;
+	left:-221px;
 	border:1pt solid #EEE;
 	border-radius:5px;
 	background:white;
 	z-index:101;
-	width:236px;
+	width:200px;
 	display: none;
 }
 #upload_bg #default_text {
 	position:absolute;
-	top:30px;
+	top:35px;
 	left:15px;
-	border:1pt solid #EEE;
+	border:1pt solid #DDD;
 	padding:4px 5px;
-	width:195px;
+	width:160px;
 }
 #upload_form #file_submit {
 	border:1pt solid #EEE;
+	padding:2px;
 }
 #upload_form #file_submit:hover {
 	background: #757575;
@@ -215,9 +226,10 @@ a.jp-play, a.jp-pause {
 }
 #menu {
 	display: none;
-    left: -100px;
+    left: 20px;
+	top:20px;
     margin: 0 auto;
-    position: relative;
+    position: fixed;
     width: 780px;
 }
 /*
@@ -257,4 +269,12 @@ a.jp-play, a.jp-pause {
 #menu a#pause {
 	display: none;
 }
-
+.errorlist {
+	font-weight:100;
+	color:red;
+	margin-left:-10px;
+}
+#errors {
+	width:180px;
+	margin-right:0px;
+}
