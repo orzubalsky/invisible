@@ -191,11 +191,12 @@ a.jp-play, a.jp-pause {
 	color:#999;
 	position:absolute;
 	left:-221px;
-	border-radius:5px;
+	border-radius:3px;
 	background:white;
 	z-index:101;
 	width:200px;
 	display: none;
+	border:1px solid #EEE;
 }
 #upload_bg #default_text {
 	position:absolute;
@@ -259,9 +260,10 @@ a.jp-play, a.jp-pause {
 	position:absolute;
 	top:0px;
 	left: 0px;
-	border:1px solid #333;
 	padding:15px 20px;
 	color:#333;
+	border-radius:3px;
+	border:1px solid #EEE;
 }
 #about #close {
 	margin:0;
@@ -284,10 +286,11 @@ a.jp-play, a.jp-pause {
 	background:white;
 	color:#333;
 	padding:20px;
-	border-radius:5px;
+	border-radius:3px;
 	top:20px;
 	left:20px;
 	display:none;
+	border:1px solid #EEE;
 }
 #contribute #close {
 	margin: 0 0 10px;

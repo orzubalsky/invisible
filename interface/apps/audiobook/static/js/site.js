@@ -44,7 +44,7 @@
 			{
 				if (!$('#menu').is(":visible"))
 				{
-					$('#menu').show();	
+					$('#menu').fadeIn();	
 				}
 			});
 
