@@ -59,8 +59,9 @@ body.uploading {
 }
 .uploading #book .uploaded {	
 	border: 1px dotted transparent;
-	background-color: #eee;
-	color: #eee;	
+	background-color: #333;
+	color: #white;	
+	text-decoration:line-through;
 }
 .uploading #book div {
 	border: 1px dotted #bdbdbd;
