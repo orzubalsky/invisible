@@ -215,7 +215,7 @@ class TextChunkWork(Work):
             text = ''
 
             for i, line in enumerate(myfile):
-                if i % 20 is 0:
+                if i % 15 is 0:
                     chunk = Chunk(work=self, text=text, number=i)
                     chunk.save()
                     text = ''
