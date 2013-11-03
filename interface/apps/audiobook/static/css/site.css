@@ -260,9 +260,8 @@ a.jp-play, a.jp-pause {
 #about {
 	display:none;
 	background:white;
-	position:absolute;
-	top:0px;
-	left: 0px;
+	position:fixed;
+	width: 780px;
 	padding:15px 20px;
 	color:#333;
 	border-radius:3px;
