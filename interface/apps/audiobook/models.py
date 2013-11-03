@@ -243,7 +243,7 @@ class Chunk(Base):
 
     work = ForeignKey(TextChunkWork)
     number = IntegerField(verbose_name=_("Chunk Number"))
-    text = HTMLField(verbose_name=_("Text"), blank=False, null=False)
+    text = TextField(verbose_name=_("Text"), blank=False, null=False)
 
     objects = ChunkManager()
 
