@@ -108,6 +108,8 @@
 
 				self.pausePlayer();
 
+ 		        $('#upload_bg').hide();
+ 		        
  		        $('body').addClass('uploading');
 
 				$('#contribute').fadeIn();
@@ -145,6 +147,8 @@
  		    $('.uploading #book > div').live('click', function(e) 
  		    {
  		        e.preventDefault();
+
+ 		        $('#contribute').hide();
 
  	        	var chunk_number = lib.getId($(this).attr('id')); 		        
 				
