@@ -44,7 +44,11 @@
 			{
 				if (!$('#menu').is(":visible"))
 				{
-					$('#menu').fadeIn("slow");	
+					setTimeout(function()
+					{
+						$('#menu').fadeIn(1000);
+					}, 1000);
+					
 				}
 			});
 
@@ -86,7 +90,7 @@
 			{
 				e.preventDefault();
 
-				var $element = self.getNextPlayableAudio();
+				var $element = self.getTopPlayableAudio();
 
 				self.playElement($element);
 			});
@@ -203,25 +207,8 @@
 			{
 				if ($('body').hasClass('playing'))
 				{
-					var scrollTop = $(document).scrollTop();
-	        		
-					var $uploadedElements = $('#book .uploaded');
-
-					for(var i=0; i<$uploadedElements.size(); i++)
-					{
-						var $element = $uploadedElements.eq(i);
-
-						var elementTop = $element.position().top;
-
-						if(elementTop > scrollTop)
-						{
-							console.log($element);
-
-							self.playElement($element);
-
-							return;
-						}
-					}
+					var $element = self.getTopPlayableAudio();
+					self.playElement($element);
 				}
     		});
 		};
@@ -237,7 +224,11 @@
 
 			var audio_file = $element.attr('id');
 
-			self.loadAudio(audio_file, $element);
+			var media_loaded = $("#jquery_jplayer_1").data().jPlayer.status.src;
+			
+			var resume = (audio_file == media_loaded) ? true : false;
+
+			self.loadAudio(audio_file, $element, resume);
 
 			$('#play').hide()
 			$('#pause').show();			
@@ -247,14 +238,18 @@
  		/*
  		 *	Play audio file and load page in google book
  		 */	
- 		this.loadAudio = function(audio_file, element)
+ 		this.loadAudio = function(audio_file, element, resume)
  		{
  			var self = this;
 
- 			// play audio file
-			$("#jquery_jplayer_1").jPlayer("setMedia", {
-				mp3: audio_file,
-			});
+ 			if (resume == false)
+ 			{
+ 				// play audio file
+				$("#jquery_jplayer_1").jPlayer("setMedia", {
+					mp3: audio_file,
+				});
+ 			}
+
 			$("#jquery_jplayer_1").jPlayer("play");
 
 			$('#book > div').removeClass('playing');
@@ -418,9 +413,35 @@
 
 			var next_element = $(next_elements).filter('.uploaded').first();
 
-			console.log(next_element);
-
 			return next_element;
+ 		};
+
+
+ 		/*
+ 		 *	Try to find elements that have the class .uploaded
+ 		 *	and that is at the top of the page in the current 
+ 		 *  scroll position.
+ 		 *	return the first element found
+ 		 */	
+ 		this.getTopPlayableAudio = function()
+ 		{
+ 			var self = this;
+
+			var scrollTop = $(document).scrollTop();
+	        		
+			var $uploadedElements = $('#book .uploaded');
+
+			for(var i=0; i<$uploadedElements.size(); i++)
+			{
+				var $element = $uploadedElements.eq(i);
+
+				var elementTop = $element.position().top;
+
+				if(elementTop > scrollTop)
+				{
+					return $element;
+				}
+			}
  		};
 
 
@@ -574,7 +595,7 @@
 
 				var audio_file = $next_element.attr('id');
 				
-				self.loadAudio(audio_file, $next_element);
+				self.loadAudio(audio_file, $next_element, false);
 			});			
 		};
 
