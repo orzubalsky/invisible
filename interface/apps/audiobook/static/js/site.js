@@ -24,8 +24,8 @@
             this.chunkInteraction(); 
             this.formInteraction();  
 			this.menuInteraction();
-          	this.scrollInteraction();
-            //this.HandleUploadForm(); 
+          	// this.scrollInteraction();
+            // this.HandleUploadForm(); 
 			
 			
 		};	
@@ -178,6 +178,14 @@
  		        }	    
       		});
 
+ 		    $('.playing #book > div').live('click', function(e) 
+ 		    {
+ 		        if ($(this).hasClass('uploaded'))
+ 		        {
+ 		        	var audio_file = $(this).attr('id');
+ 		        	self.playElement($(this));
+ 		        }      		
+			});
 		};
 
 
