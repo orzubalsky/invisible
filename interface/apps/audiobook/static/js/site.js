@@ -40,11 +40,11 @@
 
 			// the menu should be hidden on pageload
 			// a click on any element should make it visible
-			$(document).click(function(e)
+			$(document).ready(function(e)
 			{
 				if (!$('#menu').is(":visible"))
 				{
-					$('#menu').fadeIn();	
+					$('#menu').fadeIn("slow");	
 				}
 			});
 

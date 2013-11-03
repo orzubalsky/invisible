@@ -45,6 +45,7 @@ body.uploading {
 }
 #book .hover {
 	background-color: #bdbdbd;
+	cursor:pointer;
 }
 #book .selected {
 	background-color: #999;
@@ -207,8 +208,9 @@ a.jp-play, a.jp-pause {
 	width:160px;
 }
 #upload_form #file_submit {
-	border:1pt solid #EEE;
-	padding:2px;
+	border:1pt solid #FFF;
+	padding:3px;
+	font-family:"Andale Mono","Open Sans",Helvetica, Arial, sans-serif;
 }
 #upload_form #file_submit:hover {
 	background: #757575;
@@ -281,14 +283,14 @@ a.jp-play, a.jp-pause {
 	margin-right:0px;
 }
 #contribute {
-	position:absolute;
+	position:fixed;
 	width:200px;
 	background:white;
 	color:#333;
 	padding:20px;
 	border-radius:3px;
 	top:20px;
-	left:20px;
+	left:250px;
 	display:none;
 	border:1px solid #EEE;
 }
