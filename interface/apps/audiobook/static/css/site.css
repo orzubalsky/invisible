@@ -66,6 +66,15 @@ body.uploading {
 .uploading #book div {
 	border: 1px dotted #bdbdbd;
 }
+.playing #book .uploaded {
+	/*text-decoration: line-through;*/
+	background:#eee;
+	color:#eee;
+}
+.playing #book .playing {
+	background:#333;
+	color:#333;
+}
 #sounds {
 	padding:0;
 	margin:0;

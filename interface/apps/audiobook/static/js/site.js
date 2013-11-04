@@ -442,14 +442,14 @@
 			var scrollTop = $(document).scrollTop();
 	        		
 			var $uploadedElements = $('#book .uploaded');
-
+		
 			for(var i=0; i<$uploadedElements.size(); i++)
 			{
 				var $element = $uploadedElements.eq(i);
 
 				var elementTop = $element.position().top;
 
-				if(elementTop > scrollTop)
+				if(elementTop >= scrollTop)
 				{
 					return $element;
 				}
