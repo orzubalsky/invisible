@@ -71,6 +71,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.media',
     'django.core.context_processors.static',
     'django.core.context_processors.tz',
+    'audiobook.context_processors.google_analytics',
     'django.contrib.messages.context_processors.messages',
 )
 
