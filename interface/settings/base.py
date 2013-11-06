@@ -130,6 +130,8 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'south',                        # intelligent schema and data migrations
     'pytz',                         # python timezone library
+    'kombu.transport.django',    
+    'djcelery',
     'audiobook',
     'ajaxuploader',
     'debug_toolbar',
@@ -193,5 +195,11 @@ DEBUG_TOOLBAR_PANELS = (
 DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False,
 }
+
+# tell kombu to use the Django database as the message queue
+BROKER_URL = "django://"
+CELERY_IMPORTS = ("audiobook.tasks", )
+import djcelery
+djcelery.setup_loader()
 
 UPLOAD_ROOT = MEDIA_ROOT

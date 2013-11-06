@@ -256,9 +256,14 @@
 
  			if (resume == false)
  			{
+ 				var filename_wo_extension = audio_file.replace(/\.[^/.]+$/, "")
+ 				var audio_file_mp3 = filename_wo_extension + '.mp3'
+ 				var audio_file_m4a = filename_wo_extension + '.m4a'
+
  				// play audio file
 				$("#jquery_jplayer_1").jPlayer("setMedia", {
-					mp3: audio_file,
+					mp3: audio_file_mp3,
+					m4a: audio_file_m4a
 				});
  			}
 
@@ -592,7 +597,7 @@
 			$("#jquery_jplayer_1").jPlayer({
 				ready: function(event){},
 		        swfPath: STATIC_URL + "js",
-				supplied: "mp3",
+				supplied: "mp3, m4a",
 				wmode: "window"
 			});
 

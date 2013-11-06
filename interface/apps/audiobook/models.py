@@ -6,8 +6,10 @@ from django.core.files.storage import FileSystemStorage
 from django.core.files import File
 from django.conf import settings
 from django.template.defaultfilters import slugify
-from tinymce.models import HTMLField
-
+from audiobook.tasks import *
+import random
+import string
+import os
 
 # set upload directory to use the UPLOAD_ROOT set in settings
 # UPLOAD_ROOT is defined differently in development or production
@@ -259,10 +261,16 @@ class ChunkSubmission(Base):
         ordering = ['chunk']
 
     def audio_filename(self, filename):
-        return 'uploads/%s/page_%i_%s' % (
+
+        filename, extension = os.path.splitext(filename)
+
+        rand_name = ''.join(random.choice(string.lowercase) for i in range(10))
+        rand_filename = "%s%s" % (rand_name, extension)
+
+        return 'uploads/%s/chunk_%i_%s' % (
             slugify(self.chunk.work.name),
             self.chunk.number,
-            filename
+            rand_filename
         )
 
     chunk = OneToOneField(Chunk)
@@ -274,4 +282,19 @@ class ChunkSubmission(Base):
     def __unicode__(self):
         return "audio for %s" % (self.chunk)
 
+    def save(self, *args, **kwargs):
+        """Convert file if saved for the first time"""
+        created = False
+        if self.pk is None:
+            created = True
 
+        super(ChunkSubmission, self).save(*args, **kwargs)
+
+        if created is True:
+            # convert the audio with a celery task
+            process_audio.delay(self)
+
+
+# signals are separated to signals.py
+# just for the sake of organization
+import signals
