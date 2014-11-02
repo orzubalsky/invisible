@@ -1,7 +1,6 @@
 # Django settings for ts project.
 import os
 import sys
-from django.conf import global_settings
 
 ADMINS = (
     ('Or Zubalsky', 'juviley@gmail.com'),
@@ -43,7 +42,7 @@ STATICFILES_DIRS = (
     # Put strings here, like '/home/html/static' or 'C:/www/django/static'.
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(PROJECT_DIR, 'static/'),
+    # os.path.join(PROJECT_DIR, 'static/'),
 )
 
 # List of finder classes that know how to find static files in
@@ -126,13 +125,12 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'django.contrib.redirects',
     'grappelli',
-    'filebrowser',
     'django.contrib.admin',
-    'south',                        # intelligent schema and data migrations
     'pytz',                         # python timezone library
-    'kombu.transport.django',    
+    'kombu.transport.django',
     'djcelery',
     'audiobook',
+    'voicemail',
     'ajaxuploader',
     'debug_toolbar',
 )
@@ -156,10 +154,10 @@ LOGGING = {
             'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
         },
-        'console':{
-            'level':'DEBUG',
-            'class':'logging.StreamHandler'
-        },        
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler'
+        },
     },
     'loggers': {
         'django.request': {
@@ -171,7 +169,7 @@ LOGGING = {
             'handlers': ['console'],
             'level': 'ERROR',
             'propagate': True,
-        },        
+        },
     }
 }
 
@@ -180,21 +178,9 @@ TINYMCE_DEFAULT_CONFIG = {
     'theme': 'advanced',
 }
 
-DEBUG_TOOLBAR_PANELS = (
-    'debug_toolbar.panels.version.VersionDebugPanel',
-    'debug_toolbar.panels.timer.TimerDebugPanel',
-    'debug_toolbar.panels.settings_vars.SettingsVarsDebugPanel',
-    'debug_toolbar.panels.headers.HeaderDebugPanel',
-    'debug_toolbar.panels.request_vars.RequestVarsDebugPanel',
-    'debug_toolbar.panels.template.TemplateDebugPanel',
-    'debug_toolbar.panels.sql.SQLDebugPanel',
-    'debug_toolbar.panels.signals.SignalDebugPanel',
-    'debug_toolbar.panels.logger.LoggingPanel',
-)
+DEBUG_TOOLBAR_PATCH_SETTINGS = False
 
-DEBUG_TOOLBAR_CONFIG = {
-    'INTERCEPT_REDIRECTS': False,
-}
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 # tell kombu to use the Django database as the message queue
 BROKER_URL = "django://"

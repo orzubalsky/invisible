@@ -1,67 +1,149 @@
 # -*- coding: utf-8 -*-
-import datetime
-from south.db import db
-from south.v2 import SchemaMigration
-from django.db import models
+from __future__ import unicode_literals
+
+from django.db import models, migrations
+import audiobook.models
+import django.core.files.storage
 
 
-class Migration(SchemaMigration):
+class Migration(migrations.Migration):
 
-    def forwards(self, orm):
-        # Adding model 'Work'
-        db.create_table(u'audiobook_work', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('created', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('updated', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
-            ('is_active', self.gf('django.db.models.fields.BooleanField')(default=True, max_length=1)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=200)),
-            ('page_count', self.gf('django.db.models.fields.IntegerField')()),
-            ('embed_code', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
-        ))
-        db.send_create_signal(u'audiobook', ['Work'])
+    dependencies = [
+    ]
 
-        # Adding model 'Submission'
-        db.create_table(u'audiobook_submission', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('created', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('updated', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
-            ('is_active', self.gf('django.db.models.fields.BooleanField')(default=True, max_length=1)),
-            ('work', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['audiobook.Work'])),
-            ('page_number', self.gf('django.db.models.fields.IntegerField')(unique=True, max_length=4)),
-            ('audio_file', self.gf('django.db.models.fields.files.FileField')(max_length=100)),
-        ))
-        db.send_create_signal(u'audiobook', ['Submission'])
-
-
-    def backwards(self, orm):
-        # Deleting model 'Work'
-        db.delete_table(u'audiobook_work')
-
-        # Deleting model 'Submission'
-        db.delete_table(u'audiobook_submission')
-
-
-    models = {
-        u'audiobook.submission': {
-            'Meta': {'ordering': "['work', 'page_number']", 'object_name': 'Submission'},
-            'audio_file': ('django.db.models.fields.files.FileField', [], {'max_length': '100'}),
-            'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True', 'max_length': '1'}),
-            'page_number': ('django.db.models.fields.IntegerField', [], {'unique': 'True', 'max_length': '4'}),
-            'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
-            'work': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['audiobook.Work']"})
-        },
-        u'audiobook.work': {
-            'Meta': {'object_name': 'Work'},
-            'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'embed_code': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True', 'max_length': '1'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
-            'page_count': ('django.db.models.fields.IntegerField', [], {}),
-            'updated': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'})
-        }
-    }
-
-    complete_apps = ['audiobook']
+    operations = [
+        migrations.CreateModel(
+            name='Chunk',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('created', models.DateTimeField(auto_now_add=True)),
+                ('updated', models.DateTimeField(auto_now=True)),
+                ('is_active', models.BooleanField(default=1, max_length=1)),
+                ('number', models.IntegerField(verbose_name='Chunk Number')),
+                ('text', models.TextField(verbose_name='Text')),
+            ],
+            options={
+                'ordering': ['work', 'number'],
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='ChunkSubmission',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('created', models.DateTimeField(auto_now_add=True)),
+                ('updated', models.DateTimeField(auto_now=True)),
+                ('is_active', models.BooleanField(default=1, max_length=1)),
+                ('audio_file', models.FileField(storage=django.core.files.storage.FileSystemStorage(base_url=b'/uploads', location=b'/Users/orzubalsky/code/invisible/interface/settings/../media'), upload_to=audiobook.models.chunk_audio_filename)),
+                ('chunk', models.OneToOneField(to='audiobook.Chunk')),
+            ],
+            options={
+                'ordering': ['chunk'],
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='GoogleBookWork',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('created', models.DateTimeField(auto_now_add=True)),
+                ('updated', models.DateTimeField(auto_now=True)),
+                ('is_active', models.BooleanField(default=1, max_length=1)),
+                ('name', models.CharField(help_text='The title of the book or text', max_length=200, verbose_name='name')),
+                ('page_count', models.IntegerField(help_text='The number of pages in the book or text', verbose_name='Page count')),
+                ('embed_code', models.TextField(help_text='If the book or text is on google books, the embed code can be pasted below', null=True, verbose_name='Embed code', blank=True)),
+            ],
+            options={
+                'abstract': False,
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='GoogleBookWorkSubmission',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('created', models.DateTimeField(auto_now_add=True)),
+                ('updated', models.DateTimeField(auto_now=True)),
+                ('is_active', models.BooleanField(default=1, max_length=1)),
+                ('audio_file', models.FileField(storage=django.core.files.storage.FileSystemStorage(base_url=b'/uploads', location=b'/Users/orzubalsky/code/invisible/interface/settings/../media'), upload_to=audiobook.models.googlebook_audio_filename)),
+            ],
+            options={
+                'ordering': ['page'],
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Page',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('created', models.DateTimeField(auto_now_add=True)),
+                ('updated', models.DateTimeField(auto_now=True)),
+                ('is_active', models.BooleanField(default=1, max_length=1)),
+                ('number', models.IntegerField(verbose_name='Page Number')),
+                ('work', models.ForeignKey(to='audiobook.GoogleBookWork')),
+            ],
+            options={
+                'ordering': ['work', 'number'],
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='TextChunkWork',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('created', models.DateTimeField(auto_now_add=True)),
+                ('updated', models.DateTimeField(auto_now=True)),
+                ('is_active', models.BooleanField(default=1, max_length=1)),
+                ('name', models.CharField(help_text='The title of the book or text', max_length=200, verbose_name='name')),
+                ('text_file', models.FileField(storage=django.core.files.storage.FileSystemStorage(base_url=b'/uploads', location=b'/Users/orzubalsky/code/invisible/interface/settings/../media'), upload_to=audiobook.models.text_filename)),
+            ],
+            options={
+                'abstract': False,
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='TextWork',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('created', models.DateTimeField(auto_now_add=True)),
+                ('updated', models.DateTimeField(auto_now=True)),
+                ('is_active', models.BooleanField(default=1, max_length=1)),
+                ('name', models.CharField(help_text='The title of the book or text', max_length=200, verbose_name='name')),
+                ('text', models.TextField(verbose_name='Full Text')),
+            ],
+            options={
+                'abstract': False,
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='TextWorkSubmission',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('created', models.DateTimeField(auto_now_add=True)),
+                ('updated', models.DateTimeField(auto_now=True)),
+                ('is_active', models.BooleanField(default=1, max_length=1)),
+                ('start_index', models.IntegerField()),
+                ('end_index', models.IntegerField()),
+                ('audio_file', models.FileField(storage=django.core.files.storage.FileSystemStorage(base_url=b'/uploads', location=b'/Users/orzubalsky/code/invisible/interface/settings/../media'), upload_to=audiobook.models.textwork_audio_filename)),
+                ('work', models.ForeignKey(to='audiobook.TextWork')),
+            ],
+            options={
+                'ordering': ['-start_index'],
+            },
+            bases=(models.Model,),
+        ),
+        migrations.AddField(
+            model_name='googlebookworksubmission',
+            name='page',
+            field=models.OneToOneField(to='audiobook.Page'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='chunk',
+            name='work',
+            field=models.ForeignKey(to='audiobook.TextChunkWork'),
+            preserve_default=True,
+        ),
+    ]

@@ -65,7 +65,7 @@ class GoogleBookWorkQuerySet(QuerySet):
 
 
 class GoogleBookWorkManager(Manager):
-    def get_query_set(self):
+    def get_queryset(self):
         return GoogleBookWorkQuerySet(
             self.model,
             using=self._db
@@ -110,7 +110,7 @@ class PageQuerySet(QuerySet):
 
 
 class PageManager(Manager):
-    def get_query_set(self):
+    def get_queryset(self):
         return PageQuerySet(self.model, using=self._db).select_related(
             'submission',
         )
@@ -131,6 +131,14 @@ class Page(Base):
         return "page %i in %s" % (self.number, self.work)
 
 
+def googlebook_audio_filename(self, filename):
+    return 'uploads/%s/page_%i_%s' % (
+        slugify(self.page.work.name),
+        self.page.number,
+        filename
+    )
+
+
 class GoogleBookWorkSubmission(Base):
     """
     A submission for a single page in the work.
@@ -138,17 +146,10 @@ class GoogleBookWorkSubmission(Base):
     class Meta:
         ordering = ['page']
 
-    def audio_filename(self, filename):
-        return 'uploads/%s/page_%i_%s' % (
-            slugify(self.page.work.name),
-            self.page.number,
-            filename
-        )
-
     page = OneToOneField(Page)
     audio_file = FileField(
         storage=file_storage,
-        upload_to=audio_filename,
+        upload_to=googlebook_audio_filename,
     )
 
     def __unicode__(self):
@@ -161,6 +162,15 @@ class TextWork(Work):
     text = TextField(verbose_name=_("Full Text"), blank=False, null=False)
 
 
+def textwork_audio_filename(self, filename):
+    return 'uploads/%s/%i_%i_%s' % (
+        slugify(self.work.name),
+        self.start_index,
+        self.end_index,
+        filename
+    )
+
+
 class TextWorkSubmission(Base):
     """
     A submission for a single page in the work.
@@ -168,34 +178,29 @@ class TextWorkSubmission(Base):
     class Meta:
         ordering = ['-start_index']
 
-    def audio_filename(self, filename):
-        return 'uploads/%s/%i_%i_%s' % (
-            slugify(self.work.name),
-            self.start_index,
-            self.end_index,
-            filename
-        )
-
     work = ForeignKey(TextWork)
     start_index = IntegerField()
     end_index = IntegerField()
     audio_file = FileField(
         storage=file_storage,
-        upload_to=audio_filename,
+        upload_to=textwork_audio_filename,
     )
 
     def __unicode__(self):
         return "audio for %s" % (self.work)
 
 
+def text_filename(self, filename):
+    return 'uploads/%s/text_%s' % (
+        slugify(self.name),
+        filename
+    )
+
+
 class TextChunkWork(Work):
     """
     """
-    def text_filename(self, filename):
-        return 'uploads/%s/text_%s' % (
-            slugify(self.name),
-            filename
-        )
+
 
     text_file = FileField(
         storage=file_storage,
@@ -231,7 +236,7 @@ class ChunkQuerySet(QuerySet):
 
 
 class ChunkManager(Manager):
-    def get_query_set(self):
+    def get_queryset(self):
         return ChunkQuerySet(self.model, using=self._db).select_related(
             'chunksubmission',
         )
@@ -253,6 +258,19 @@ class Chunk(Base):
         return "chunk %i in %s" % (self.number, self.work)
 
 
+def chunk_audio_filename(self, filename):
+
+    filename, extension = os.path.splitext(filename)
+
+    rand_name = ''.join(random.choice(string.lowercase) for i in range(10))
+    rand_filename = "%s%s" % (rand_name, extension)
+
+    return 'uploads/%s/chunk_%i_%s' % (
+        slugify(self.chunk.work.name),
+        self.chunk.number,
+        rand_filename
+    )
+
 class ChunkSubmission(Base):
     """
     A submission for a single text chunk in the work.
@@ -260,23 +278,10 @@ class ChunkSubmission(Base):
     class Meta:
         ordering = ['chunk']
 
-    def audio_filename(self, filename):
-
-        filename, extension = os.path.splitext(filename)
-
-        rand_name = ''.join(random.choice(string.lowercase) for i in range(10))
-        rand_filename = "%s%s" % (rand_name, extension)
-
-        return 'uploads/%s/chunk_%i_%s' % (
-            slugify(self.chunk.work.name),
-            self.chunk.number,
-            rand_filename
-        )
-
     chunk = OneToOneField(Chunk)
     audio_file = FileField(
         storage=file_storage,
-        upload_to=audio_filename,
+        upload_to=chunk_audio_filename,
     )
 
     def __unicode__(self):

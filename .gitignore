@@ -26,3 +26,5 @@ interface/media/uploads/
 # ignore cache files
 tmp
 interface/tmp/
+
+config.codekit
