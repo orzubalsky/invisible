@@ -1,0 +1,25 @@
+type Work @model @auth(rules: [{allow: public, provider: iam}]) {
+  id: ID!
+  id_legacy: Int
+  name: String!
+  text_leagcy: String
+  text: String
+  is_active: Boolean
+  created_legacy: AWSDateTime
+  updated_legacy: AWSDateTime
+  WorkChunks: [WorkChunk] @connection(keyName: "byWork", fields: ["id"])
+}
+
+type WorkChunk @model @auth(rules: [{allow: public, provider: iam}]) @key(name: "byWork", fields: ["workID"]) {
+  id: ID!
+  id_legacy: Int
+  number: Int
+  index: Int
+  text: String
+  is_active: Boolean
+  filename_legacy: String
+  filename: String
+  created_legacy: AWSDateTime
+  updated_legacy: AWSDateTime
+  workID: ID!
+}

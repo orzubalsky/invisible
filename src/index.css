@@ -1,0 +1,144 @@
+@font-face {
+  font-family: 'AndaleMono';
+  src: url('./fonts/andalemono-webfont.eot');
+  src: url('./fonts/andalemono-webfont.eot?#iefix') format('embedded-opentype'),
+       url('./fonts/andalemono-webfont.woff') format('woff'),
+       url('./fonts/andalemono-webfont.ttf') format('truetype'),
+       url('./fonts/andalemono-webfont.svg#AndaleMono') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family:"Andale Mono","Open Sans",Helvetica, Arial, sans-serif;
+	font-size:9pt;
+	color:#333;
+	line-height:1.4em;
+}
+
+.invisible {
+	color:#EEE;
+}
+
+#player {
+	position: absolute;
+	top: 50px;
+	width:240px;
+	float:left;
+}
+
+#sounds {
+	padding:0;
+	margin:0;
+}
+#sounds a {
+	display: block;
+	width:20px;
+	height:6px;
+	border-width:1px;
+	border-color: transparent;
+	border-style: solid;
+	margin-right:2px;
+	margin-bottom: 2px;
+	padding:0;
+	overflow:hidden;
+	font-size:0pt;
+	float: left;
+}
+#sounds a.uploaded {
+	border-color:#EEE;
+}
+#sounds a.uploaded:hover {
+	background:#333;
+}
+#sounds a.empty {
+	background: #444;
+	opacity: 0;
+}
+#sounds a.empty:hover {
+
+
+}
+#sounds a.playing {
+	background: black;
+}
+#page {
+	font-family:"Andale Mono","Open Sans",Helvetica, Arial, sans-serif;
+	font-size:7pt;
+	position:fixed;
+	display:none;
+}
+
+
+/*jplayer yo*/
+div#jquery_jplayer_1 {
+
+}
+div.jp-audio, div.jp-audio-stream, div.jp-video {
+
+    border: 0;
+}
+div#jp_container_1.jp-audio {
+	opacity:0;
+    height: 50px;
+    width: 780px;
+}
+div.jp-audio div.jp-type-single div.jp-interface {
+	background-color: #FFF;
+    height: 50px;
+}
+
+div.jp-audio ul.jp-controls {
+    padding: 0;
+    width: 260px;
+}
+div.jp-audio div.jp-type-single div.jp-progress {
+	top:3px;
+    left: 35px;
+    width: 745px;
+	height:5px;
+}
+div.jp-audio div.jp-type-single div.jp-time-holder {
+	font-family:"Andale Mono","Open Sans",Helvetica, Arial, sans-serif;
+	top:13px;
+    left: 35px;
+    width: 745px;
+	color:#AAA;
+}
+div.jp-current-time, div.jp-duration {
+    font-style: normal;
+}
+/* div.jp-play-bar {
+    background: url("../blue.monday/invisible.buttons.png") repeat-x scroll 0 -218px transparent;
+}
+div.jp-seek-bar {
+	background: url("../blue.monday/invisible.buttons.png") repeat-x scroll 0 -202px transparent;
+}
+a.jp-play {
+	background: url("../blue.monday/invisible.buttons.png") 0 0 no-repeat;
+	display: none;
+}
+a.jp-play:hover {
+	background: url("../blue.monday/invisible.buttons.png") -41px 0 no-repeat;
+}
+a.jp-pause {
+	background: url("../blue.monday/invisible.buttons.png") 0 -40px no-repeat;
+	display: none;
+}
+a.jp-pause:hover {
+	background: url("../blue.monday/invisible.buttons.png") -41px -40px no-repeat;
+} */
+a.jp-play, a.jp-pause {
+    height: 10px;
+    width: 10px;
+}
