@@ -1,0 +1,19 @@
+.App--uploading {
+	background-color: #eee;
+	color: #eee;
+}
+
+.App .Content {
+	width:780px;
+	padding: 40px;
+	margin:auto;
+	position: relative;
+}
+
+@media all and (device-width: 768px) and (device-height: 1024px) {
+	.App .Content {
+		font-size: 10pt;
+		width: 600px;
+		margin: 0 0 0 200px;
+	}
+}

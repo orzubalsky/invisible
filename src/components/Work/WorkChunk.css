@@ -1,0 +1,52 @@
+.WorkChunkWrapper {
+	position: relative;
+}
+
+.WorkChunk {
+  padding: 0 20px;
+}
+
+.WorkChunk--uploading:hover {
+	background-color: #bdbdbd;
+	cursor: pointer;
+}
+
+.WorkChunk--uploading {
+	color: #eee;
+	border: 1px dotted #bdbdbd;
+}
+
+/* .WorkChunk--uploading:hover {
+	background:#efefef;
+	color:#efefef;
+} */
+
+.WorkChunk--uploading.WorkChunk--uploaded,
+.WorkChunk--uploading.WorkChunk--uploaded:hover  {
+	border: 1px dotted transparent;
+	background-color: #333;
+	text-decoration:line-through;
+}
+
+.WorkChunk--playing.WorkChunk--uploaded {
+	background:#eee;
+	color:#eee;
+}
+
+.WorkChunk--playing.WorkChunk--uploaded.WorkChunk--selected {
+	background:#333;
+	color:#333;
+}
+
+.WorkChunk.playing {
+	background:#bdbdbd;
+	color:#bdbdbd;
+}
+
+.WorkChunk--selected {
+	background-color: #999;
+}
+
+.WorkChunk--uploading.WorkChunk--selected:hover {
+	background-color: #999;
+}

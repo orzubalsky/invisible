@@ -1,0 +1,26 @@
+.Menu {
+	opacity: 0;
+  left: 20px;
+	top: 20px;
+  margin: 0 auto;
+  position: fixed;
+	width: 780px;
+	transition: opacity 2s;
+	transition-delay: 1s;
+}
+
+.Menu.visible {
+	opacity: 1;
+}
+
+.Menu button {
+	font-family:"Andale Mono","Open Sans",Helvetica, Arial, sans-serif;
+	display: block;
+	color:#333;
+	border: none;
+	background: transparent;
+	font-size: 12px;
+	line-height: 16.8px;
+	padding: 0;
+	cursor: pointer;
+}

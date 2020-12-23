@@ -1,0 +1,91 @@
+.WorkChunkUpload {
+	color:#999;
+	position:absolute;
+	left:-221px;
+	border-radius:3px;
+	background:white;
+	z-index:101;
+	width:200px;
+	border:1px solid #EEE;
+	visibility: hidden;
+	opacity: 0;
+	transition: all 0.3s;
+}
+
+.WorkChunkUpload.visible {
+	visibility: visible;
+	opacity: 1;
+}
+
+.tablet {
+	display: none;
+}
+
+.desktop {
+	display: block;
+	position: absolute;
+	width: 100%;
+	background-color: white;
+}
+
+.Upload__helpText {
+	position:absolute;
+	top:35px;
+	left:15px;
+	border:1pt solid #DDD;
+	padding:4px 5px;
+	width:170px;
+}
+
+.Upload__Form {
+	overflow:hidden;
+	position: relative;
+	padding: 0 15px 15px;
+  position: relative;
+  width: 198px;
+}
+
+.Upload__Form [name="recording"] {
+	opacity: 0;
+	position: relative;
+	top: 0px;
+	width: 170px;
+	z-index: 100;
+	margin-bottom: 30px;
+}
+
+.Upload__Form #id_chunk {
+	display: none;
+}
+
+.Upload__Form [type="submit"]  {
+	border:1pt solid #FFF;
+	padding:3px;
+	font-family:"Andale Mono","Open Sans",Helvetica, Arial, sans-serif;
+}
+
+.Upload__Form [type="submit"]:hover {
+	background: #757575;
+	color: white;
+}
+
+.Upload__errors {
+	width:180px;
+	margin-right:0px;
+}
+
+.errorlist {
+	font-weight:100;
+	color:red;
+	margin-left:-10px;
+}
+
+
+@media all and (device-width: 768px) and (device-height: 1024px) {
+	.tablet {
+		display: block;
+	}
+	.desktop {
+		display: none;
+	}
+}

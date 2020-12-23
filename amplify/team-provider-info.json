@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-invisiblelibrary-dev-180627-authRole",
+      "UnauthRoleArn": "arn:aws:iam::685794057970:role/amplify-invisiblelibrary-dev-180627-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::685794057970:role/amplify-invisiblelibrary-dev-180627-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-invisiblelibrary-dev-180627-deployment",
+      "UnauthRoleName": "amplify-invisiblelibrary-dev-180627-unauthRole",
+      "StackName": "amplify-invisiblelibrary-dev-180627",
+      "StackId": "arn:aws:cloudformation:us-east-1:685794057970:stack/amplify-invisiblelibrary-dev-180627/835b8bd0-3c05-11eb-9611-1246411399d1",
+      "AmplifyAppId": "d235096mdr61np"
+    },
+    "categories": {
+      "auth": {
+        "invisiblelibraryc1c51d6a": {}
+      }
+    }
+  }
+}

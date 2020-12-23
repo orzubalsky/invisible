@@ -1,0 +1,28 @@
+.About {
+	visibility: hidden;
+	background:white;
+	position:fixed;
+	width: 780px;
+	padding:15px 20px;
+	color:#333;
+	border-radius:3px;
+	border:1px solid #EEE;
+	z-index: 10;
+	opacity: 0;
+	transition: all 0.3s;
+}
+
+.About.visible {
+	visibility: visible;
+	opacity: 1;
+}
+
+.About #close {
+	margin:0;
+}
+
+@media all and (device-width: 768px) and (device-height: 1024px) {
+	.About {
+		width: 640px;
+	}
+}

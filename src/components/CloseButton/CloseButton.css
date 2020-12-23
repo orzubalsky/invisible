@@ -1,0 +1,11 @@
+.CloseButton {
+	background: url('./close.png') no-repeat;
+	float:right;
+	margin:13px 13px;
+	width:13px;
+	height:13px;
+}
+
+.CloseButton:hover {
+	cursor: pointer;
+}
